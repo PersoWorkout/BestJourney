@@ -29,9 +29,10 @@ namespace Domain.UnitTest.Models
             string newFirstname = "Yasin";
             string newLastname = "Karakus";
             string newEmail = "yasin.karakus@example.com";
+            string password = "Password123!";
 
             //Act
-            user.Update(newFirstname, newLastname, newEmail);
+            user.Update(newFirstname, newLastname, newEmail, password);
 
             //Assert
             Assert.True(ValidateUserUpdate(user, newFirstname, newLastname, newEmail));
