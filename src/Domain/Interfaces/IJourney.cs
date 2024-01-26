@@ -10,6 +10,6 @@
         decimal Price { get; }
         bool IsActive { get; }
         DateTime CreatedAt { get; }
-        DateTime UpdatedAt { get; }
+        DateTime? UpdatedAt { get; }
     }
 }
