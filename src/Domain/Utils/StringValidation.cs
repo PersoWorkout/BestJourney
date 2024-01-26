@@ -11,14 +11,16 @@ namespace Domain.Utils
         }
         public static bool IsValidEmail(this string value)
         {
-            return Regex.IsMatch(value,
+            return value.IsValid() &&
+                Regex.IsMatch(value,
                     @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
                     RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
         }
 
         public static bool IsValidPassword(this string value)
         {
-            return Regex.IsMatch(value,
+            return value.IsValid() &&
+                Regex.IsMatch(value,
                 @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~`!@#\$%\^&\*\(\)_\-\+=\{\[\}\]\|\\:;'<,>\.\?\/]).{8,}$", 
                 RegexOptions.None, 
                 TimeSpan.FromMilliseconds(250));
