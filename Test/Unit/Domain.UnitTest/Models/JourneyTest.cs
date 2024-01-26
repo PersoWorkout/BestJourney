@@ -11,7 +11,6 @@ namespace Domain.UnitTest.Models
         private const string COUNTRY = "Fance";
         private const string CITY = "Paris";
         private const decimal PRICE = 100;
-        private const bool IS_ACTIVE = true;
 
 
         [Fact]
