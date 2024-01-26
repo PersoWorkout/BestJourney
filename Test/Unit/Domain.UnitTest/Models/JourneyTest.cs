@@ -1,6 +1,5 @@
 ﻿using Domain.Models;
 using Domain.UnitTest.Utils;
-using System.Globalization;
 
 namespace Domain.UnitTest.Models
 {
