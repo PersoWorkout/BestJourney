@@ -44,7 +44,7 @@ namespace Domain.UnitTest.Models
             Assert.NotNull(user.UpdatedAt);
         }
 
-        public User InstanceNewUser()
+        private User InstanceNewUser()
         {
             string firstname = FIRSTNAME;
             string lastname = LASTNAME;
