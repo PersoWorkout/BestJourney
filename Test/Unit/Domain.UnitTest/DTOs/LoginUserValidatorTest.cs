@@ -1,0 +1,73 @@
+﻿using Domain.DTOs.Validators;
+
+namespace Domain.UnitTest.DTOs
+{
+    public class LoginUserValidatorTest
+    {
+        [Fact]
+        public void Validate_ShouldBeTrue_WhenPayloadIsValid()
+        {
+            //Arrange
+            var payload = CreateValidPayload();
+
+            //Act
+            var result = payload.Validate();
+
+            //Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Validate_ShouldBeFalse_WhenEmailIsInvalid()
+        {
+            //Arrange
+            var payload = CreatePayloadWithInvalidEmail();
+
+            //Act
+            var result = payload.Validate();
+
+            //Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Validate_ShouldBeFalse_WhenPasswordIsInvalid()
+        {
+            //Arrange
+            var payload = CreatePayloadWithInvalidPassword();
+
+            //Act
+            var result = payload.Validate();
+
+            //Assert
+            Assert.False(result);
+        }
+
+        private static LoginUserValidator CreateValidPayload()
+        {
+            return new LoginUserValidator
+            {
+                Email = "john.doe@example.com",
+                Password = "Password123!"
+            };
+        }
+
+        private static LoginUserValidator CreatePayloadWithInvalidEmail()
+        {
+            return new LoginUserValidator
+            {
+                Email = "johndoeexample.com",
+                Password = "Password123!"
+            };
+        }
+
+        private static LoginUserValidator CreatePayloadWithInvalidPassword()
+        {
+            return new LoginUserValidator
+            {
+                Email = "john.doe@example.com",
+                Password = "pass"
+            };
+        }
+    }
+}
