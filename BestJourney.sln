@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.UnitTest", "Test\Uni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{F4DA7DEE-072D-41B4-BCE1-43BD9D209895}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{4FE4B359-8845-4578-A44C-FF7C87EEE609}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Application\Application.csproj", "{4FE4B359-8845-4578-A44C-FF7C87EEE609}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTest", "Application.UnitTest\Application.UnitTest.csproj", "{7CAD9787-C28D-4469-9DEF-1DA75B0C89D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTest", "Test\Unit\Application.UnitTest\Application.UnitTest.csproj", "{7CAD9787-C28D-4469-9DEF-1DA75B0C89D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
