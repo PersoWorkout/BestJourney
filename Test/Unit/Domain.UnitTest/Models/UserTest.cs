@@ -17,11 +17,7 @@ namespace Domain.UnitTest.Models
             var user = InstanceNewUser();
 
             //Assert
-            Assert.True(user.Firstname == FIRSTNAME);
-            Assert.True(user.Lastname == LASTNAME);
-            Assert.True(user.Email == EMAIL);
-            Assert.True(user.Password == PASSWORD);
-            Assert.True(user.CreatedAt < DateTime.Now);
+            Assert.True(ValidateUserCreation(user));
         }
 
         [Fact]
@@ -38,13 +34,10 @@ namespace Domain.UnitTest.Models
             user.Update(newFirstname, newLastname, newEmail);
 
             //Assert
-            Assert.True(user.Firstname == newFirstname);
-            Assert.True(user.Lastname == newLastname);
-            Assert.True(user.Email == newEmail);
-            Assert.NotNull(user.UpdatedAt);
+            Assert.True(ValidateUserUpdate(user, newFirstname, newLastname, newEmail));
         }
 
-        private User InstanceNewUser()
+        private static User InstanceNewUser()
         {
             string firstname = FIRSTNAME;
             string lastname = LASTNAME;
@@ -52,6 +45,23 @@ namespace Domain.UnitTest.Models
             string password = PASSWORD;
 
             return new(firstname, lastname, email, password);
+        }
+
+        private static bool ValidateUserCreation(User user)
+        {
+            return user.Firstname == FIRSTNAME &&
+                user.Lastname == LASTNAME &&
+                user.Email == EMAIL &&
+                user.Password == PASSWORD &&
+                user.CreatedAt < DateTime.Now;
+        }
+
+        private static bool ValidateUserUpdate(User user, string firstname, string lastname, string email)
+        {
+            return user.Firstname == firstname &&
+                user.Lastname == lastname &&
+                user.Email == email &&
+                user.UpdatedAt.HasValue;
         }
     }
 }
