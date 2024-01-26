@@ -1,6 +1,6 @@
 ﻿using Domain.Utils;
 
-namespace Domain.DTOs.Validators
+namespace Domain.DTOs.Validators.Users
 {
     public class CreateUserValidator
     {
@@ -14,14 +14,14 @@ namespace Domain.DTOs.Validators
         {
             return Firstname.IsValid() &&
                 Lastname.IsValid() &&
-                Email.IsValidEmail() && 
+                Email.IsValidEmail() &&
                 ValidPasswords();
-                
+
         }
 
         private bool ValidPasswords()
         {
-            return Password.IsValidPassword() && 
+            return Password.IsValidPassword() &&
                 Password == PasswordConfirmation;
         }
     }
