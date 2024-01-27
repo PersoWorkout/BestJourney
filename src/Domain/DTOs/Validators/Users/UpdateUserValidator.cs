@@ -11,7 +11,6 @@ namespace Domain.DTOs.Validators.Users
 
         public bool Validate()
         {
-            var test = Email.IsValidEmail();
             return Firstname.IsValid() ||
                 Lastname.IsValid() ||
                 Email.IsValidEmail() ||
