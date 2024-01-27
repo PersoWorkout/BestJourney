@@ -12,9 +12,7 @@ namespace Domain.Models
         decimal price,
         bool isActive = true): IJourney
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public Guid Id { get; }
+        public Guid Id { get; } = Guid.NewGuid();
         public string Name { get; set; } = name;
         public string Description { get; set; } = description;
         public string Country { get; set; } = country;

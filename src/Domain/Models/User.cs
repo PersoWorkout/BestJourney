@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces;
+using Domain.Utils;
 
 namespace Domain.Models
 {
@@ -8,8 +9,7 @@ namespace Domain.Models
         string email, 
         string password) : IUser
     {
-        public Guid Id { get; set; } = 
-            Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Firstname { get; set; } = firstname;
         public string Lastname { get; set; } = lastname;
         public string Email { get; set; } = email;
@@ -20,10 +20,10 @@ namespace Domain.Models
 
         public void Update(string firstname, string lastname, string email, string password)
         {
-            Firstname = firstname;
-            Lastname = lastname;
-            Email = email;
-            Password = password;
+            if(firstname.IsValid()) Firstname = firstname;
+            if(lastname.IsValid()) Lastname = lastname;
+            if(email.IsValidEmail()) Email = email;
+            if(password.IsValidPassword()) Password = password;
             UpdatedAt = DateTime.Now;
         }
     }
