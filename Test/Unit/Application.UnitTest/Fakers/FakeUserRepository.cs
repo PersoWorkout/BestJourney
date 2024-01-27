@@ -13,10 +13,9 @@ namespace Application.UnitTest.Fakers
             return await Task.Run(() => user);
         }
 
-        public async Task Delete(string id)
+        public async Task Delete(User user)
         {
-            var userIndex = _users.FindIndex(u => u.Id.ToString() == id);
-            await Task.Run(() => _users.RemoveAt(userIndex));
+            await Task.Run(() => _users.Remove(user));
         }
 
         public async Task<User?> GetById(string id)
@@ -36,9 +35,9 @@ namespace Application.UnitTest.Fakers
             return user.Password == password;
         }
 
-        public void HashPassword(User user)
+        public bool HashPassword(User user)
         {
-            return;
+            return true;
         }
 
         public async Task<User?> Update(User user)

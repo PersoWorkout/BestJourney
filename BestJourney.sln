@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{3BBC5C8E-34BD-4F45-BB42-A8EF7D1A27F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Integrationtest", "Test\Integration\TestProject1\Infrastructure.Integrationtest.csproj", "{277BA2FD-DC3C-43E7-9632-32739679DB86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Integrationtest", "Test\Integration\Infrastructure.IntegrationTest\Infrastructure.Integrationtest.csproj", "{277BA2FD-DC3C-43E7-9632-32739679DB86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\API\API.csproj", "{C90B9E9A-568E-4E52-8839-5F506FD75674}"
 EndProject

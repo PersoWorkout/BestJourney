@@ -11,12 +11,21 @@ namespace Infrastructure.Repositories
 
         public bool CheckPassword(User user, string password)
         {
-            return BCrypt.Net.BCrypt.Verify(password, user.Password);
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(password, user.Password);
+            }
+            catch { return false;}       
         }
 
-        public void HashPassword(User user)
+        public bool HashPassword(User user)
         {
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            try
+            {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                return true;
+            }
+            catch { return false; }
         }
 
         public async Task<User> Create(User user)
