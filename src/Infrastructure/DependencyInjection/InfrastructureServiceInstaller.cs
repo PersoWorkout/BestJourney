@@ -13,7 +13,7 @@ namespace Infrastructure.DependencyInjection
             this IServiceCollection services, 
             IConfiguration configuration) 
         {
-            var connectionString = configuration.GetConnectionString("defaultConnection");
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BestJourneyDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
