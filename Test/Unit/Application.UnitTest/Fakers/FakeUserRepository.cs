@@ -1,10 +1,5 @@
 ﻿using Application.Interfaces.Users;
 using Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UnitTest.Fakers
 {
@@ -39,6 +34,11 @@ namespace Application.UnitTest.Fakers
         public bool CheckPassword(User user, string password)
         {
             return user.Password == password;
+        }
+
+        public void HashPassword(User user)
+        {
+            return;
         }
 
         public async Task<User?> Update(User user)

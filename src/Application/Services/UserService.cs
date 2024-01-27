@@ -31,10 +31,12 @@ namespace Application.Services
 
         public async Task<Result<UserResponse>> Delete(string id)
         {
-            if (await _userRepository.GetById(id) is null)
+            var user = await _userRepository.GetById(id);
+
+            if (user is null)
                 return Result<UserResponse>.Failure(UserError.NotFound);
 
-            await _userRepository.Delete(id);
+            await _userRepository.Delete(user);
 
             return Result<UserResponse>.Success(new UserResponse());
         }

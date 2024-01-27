@@ -1,5 +1,7 @@
 using Application.DependencyInjection;
+using Infrastructure.Data;
 using Infrastructure.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using(var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<BestJourneyDbContext>();
+    dbContext.Database.Migrate();
 }
 
 app.UseHttpsRedirection();

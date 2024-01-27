@@ -35,9 +35,7 @@ namespace Infrastructure.Integrationtest
                 }
 
                 services.AddDbContext<BestJourneyDbContext>(options =>
-                {
-                    
-                });
+                    options.UseNpgsql(_dbContainer.GetConnectionString()));
             });
         }
 

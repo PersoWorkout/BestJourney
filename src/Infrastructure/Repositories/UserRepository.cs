@@ -1,38 +1,56 @@
 ﻿using Application.Interfaces.Users;
 using Domain.Models;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(BestJourneyDbContext dbContext) : IUserRepository
     {
+        private readonly BestJourneyDbContext _dbContext = dbContext;
+
         public bool CheckPassword(User user, string password)
         {
-            throw new NotImplementedException();
+            return BCrypt.Net.BCrypt.Verify(password, user.Password);
         }
 
-        public Task<User> Create(User user)
+        public void HashPassword(User user)
         {
-            throw new NotImplementedException();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
         }
 
-        public Task Delete(string id)
+        public async Task<User> Create(User user)
         {
-            throw new NotImplementedException();
+            var result =await _dbContext.Users.AddAsync(user);
+            await _dbContext.SaveChangesAsync();
+
+            return result.Entity;
         }
 
-        public Task<User?> GetByEmail(string email)
+        public async Task Delete(User user)
         {
-            throw new NotImplementedException();
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task<User?> GetById(string id)
+        public async Task<User?> GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            return await _dbContext
+                .Users
+                .FirstOrDefaultAsync(user => user.Email == email);
         }
 
-        public Task<User?> Update(User user)
+        public async Task<User?> GetById(string id)
         {
-            throw new NotImplementedException();
+            return await _dbContext
+                .Users
+                .FirstOrDefaultAsync(user => user.Id.ToString() == id);
+        }
+
+        public async Task<User?> Update(User user)
+        {
+            await _dbContext.SaveChangesAsync();
+            return user;
         }
     }
 }
