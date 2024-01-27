@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces;
 using Domain.Utils;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models
 {
@@ -9,6 +10,7 @@ namespace Domain.Models
         string email, 
         string password) : IUser
     {
+        [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Firstname { get; set; } = firstname;
         public string Lastname { get; set; } = lastname;

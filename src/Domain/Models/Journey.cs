@@ -1,6 +1,5 @@
 ﻿using Domain.Interfaces;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models
 {
@@ -12,7 +11,8 @@ namespace Domain.Models
         decimal price,
         bool isActive = true): IJourney
     {
-        public Guid Id { get; } = Guid.NewGuid();
+        [Key]
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = name;
         public string Description { get; set; } = description;
         public string Country { get; set; } = country;
