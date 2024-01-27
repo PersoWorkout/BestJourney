@@ -10,7 +10,7 @@ namespace Application.UnitTest.Fakers
 {
     public class FakeUserRepository : IUserRepository
     {
-        private readonly List<User> _users = [];
+        private readonly List<User> _users = new List<User>();
         public async Task<User> Create(User user)
         {
             user.CreatedAt = DateTime.Now;
@@ -36,9 +36,10 @@ namespace Application.UnitTest.Fakers
                 () => _users.FirstOrDefault(u => u.Email == email));
         }
 
-        public bool CheckPassword(User user, string password)
+        public async Task<Boolean> CheckPassword(User user, string password)
         {
-            return user.Password == password;
+            return await Task.Run(
+                () => user.Password == password);
         }
 
         public async Task<User?> Update(User user)
