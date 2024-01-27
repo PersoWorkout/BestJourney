@@ -48,7 +48,7 @@ namespace Application.Services
             if (user is null)
                 return Result<string>.Failure(UserError.InvalidCredentials);
 
-            if (!await _userRepository.CheckPassword(user, payload.Password))
+            if (!_userRepository.CheckPassword(user, payload.Password))
                 return Result<string>.Failure(UserError.InvalidCredentials);
 
             return Result<string>.Success(user.Id.ToString());

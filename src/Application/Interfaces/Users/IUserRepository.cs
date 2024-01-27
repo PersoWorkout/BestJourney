@@ -4,7 +4,7 @@ namespace Application.Interfaces.Users
 {
     public interface IUserRepository
     {
-        Task<Boolean> CheckPassword(User user, string password);
+        bool CheckPassword(User user, string password);
         Task<User> Create(User user);
         Task<User?> GetById(string id);
         Task<User?> GetByEmail(string email);
