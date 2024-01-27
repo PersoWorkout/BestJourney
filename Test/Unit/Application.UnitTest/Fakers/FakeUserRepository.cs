@@ -36,10 +36,9 @@ namespace Application.UnitTest.Fakers
                 () => _users.FirstOrDefault(u => u.Email == email));
         }
 
-        public async Task<Boolean> CheckPassword(User user, string password)
+        public bool CheckPassword(User user, string password)
         {
-            return await Task.Run(
-                () => user.Password == password);
+            return user.Password == password;
         }
 
         public async Task<User?> Update(User user)
