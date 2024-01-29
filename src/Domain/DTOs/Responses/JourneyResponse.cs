@@ -8,6 +8,7 @@
         public string Country { get; set; }
         public string City { get; set; }
         public decimal Price { get; set; }
+        public DateTime CreatedAt { get; set; }
         
     }
 }

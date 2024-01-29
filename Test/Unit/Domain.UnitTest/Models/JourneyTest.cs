@@ -24,7 +24,7 @@ namespace Domain.UnitTest.Models
         }
 
         [Fact]
-        public void Create_ShouldCreateNonActiveJourney_WhenIsActiveFalse()
+        public void Create_ShouldCreateNonActiveJourney_WhenIsActiveIsFalse()
         {
             //Arrange
             //Assert

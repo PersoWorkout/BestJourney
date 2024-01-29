@@ -1,9 +1,9 @@
 ﻿using Domain.DTOs.Validators.Users;
 
-namespace Domain.UnitTest.DTOs
+namespace Domain.UnitTest.DTOs.Users
 {
     public class CreateUserValidatorTest
-    {    
+    {
         [Fact]
         public void Validate_ShouldBeValid_WhenPayloadIsValid()
         {
