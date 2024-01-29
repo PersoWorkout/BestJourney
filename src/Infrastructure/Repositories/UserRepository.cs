@@ -9,25 +9,10 @@ namespace Infrastructure.Repositories
     {
         private readonly BestJourneyDbContext _dbContext = dbContext;
 
-        public bool CheckPassword(User user, string password)
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            try
-            {
-                return BCrypt.Net.BCrypt.Verify(password, user.Password);
-            }
-            catch { return false;}       
+            return await _dbContext.Users.ToListAsync();
         }
-
-        public bool HashPassword(User user)
-        {
-            try
-            {
-                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-                return true;
-            }
-            catch { return false; }
-        }
-
         public async Task<User> Create(User user)
         {
             var result =await _dbContext.Users.AddAsync(user);
@@ -49,11 +34,11 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(user => user.Email == email);
         }
 
-        public async Task<User?> GetById(string id)
+        public async Task<User?> GetById(Guid id)
         {
             return await _dbContext
                 .Users
-                .FirstOrDefaultAsync(user => user.Id.ToString() == id);
+                .FirstOrDefaultAsync(user => user.Id == id);
         }
 
         public async Task<User?> Update(User user)

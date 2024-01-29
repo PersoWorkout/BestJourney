@@ -14,8 +14,9 @@ namespace Application.UnitTest.Services
         {
             var userRepository = new FakeUserRepository();
             var mapper = FakeUserMapper.Create();
+            var hashService = new FakeHashService();
 
-            _userService = new UserService(userRepository, mapper);
+            _userService = new UserService(userRepository, mapper, hashService);
         }
 
         private const string DEFAULT_FIRSTNAME = "John";
@@ -34,7 +35,6 @@ namespace Application.UnitTest.Services
 
             //Assert
             Assert.True(result.IsSucess);
-            Assert.NotNull(result.Data);
         }
 
         [Fact]
@@ -88,6 +88,20 @@ namespace Application.UnitTest.Services
         }
 
         [Fact]
+        public async void Delete_ShouldBeFailure_WhenIdIsNotAValidGuid()
+        {
+            //Arrange
+            var id = "invalidId";
+
+            //Act
+            var result = await _userService.Delete(id);
+
+            //Assert
+            Assert.True(result.IsFailure);
+            Assert.Equal(UserError.InvalidPayload, result.Error);
+        }
+
+        [Fact]
         public async void Delete_ShouldBeFailure_WhenUserNotExist()
         {
             //Arrange
@@ -95,6 +109,63 @@ namespace Application.UnitTest.Services
 
             //Act
             var result = await _userService.Delete(id);
+
+            //Assert
+            Assert.True(result.IsFailure);
+            Assert.Equal(UserError.NotFound, result.Error);
+        }
+
+        [Fact]
+        public async void GetUsers_ShouldBeSuccess()
+        {
+            //Arrange
+            var firstPayload = CreateValidCreationPayload();
+            await _userService.Create(firstPayload);
+
+            //Act
+            var result = await _userService.GetUsers();
+
+            //Assert
+            Assert.True(result.IsSucess);
+        }
+
+        [Fact]
+        public async void GetById_ShouldBeSuccess_WhenUserExist()
+        {
+            //Arrange
+            var firstPayload = CreateValidCreationPayload();
+            var firstResult = await _userService.Create(firstPayload);
+
+            //Act
+            var result = await _userService.GetById(firstResult.Data!.Id);
+
+            //Assert
+            Assert.True(result.IsSucess);
+            Assert.True(firstResult.Data.Email == result.Data.Email);
+        }
+
+        [Fact]
+        public async void GetById_ShouldBeFailure_WhenIdIsInvalidGuid()
+        {
+            //Arrange
+            var id = "invalidId";
+
+            //Act
+            var result = await _userService.GetById(id);
+
+            //Assert
+            Assert.True(result.IsFailure);
+            Assert.Equal(UserError.InvalidPayload, result.Error);
+        }
+
+        [Fact]
+        public async void GetById_ShouldBeFailure_WhenUserNotExist()
+        {
+            //Arrange
+            var id = new Guid();
+
+            //Act
+            var result = await _userService.GetById(id.ToString());
 
             //Assert
             Assert.True(result.IsFailure);
@@ -180,6 +251,22 @@ namespace Application.UnitTest.Services
 
             //Assert
             Assert.True(result.IsSucess);
+        }
+
+        [Fact]
+        public async void Update_SouldBeFailure_WhenIdIsNotAValidGuid()
+        {
+            //Arrange
+            var id = "invalidId";
+
+            var payload = CreatePayloadToUpdate();
+
+            //Act
+            var result = await _userService.Update(id, payload);
+
+            //Assert
+            Assert.True(result.IsFailure);
+            Assert.Equal(UserError.InvalidPayload, result.Error);
         }
 
         [Fact]

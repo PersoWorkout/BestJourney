@@ -11,61 +11,75 @@ namespace Infrastructure.Integrationtest.Repositories
         private const string EMAIL = "john.doe@example.com";
         private const string PASSWORD = "Password123!";
 
-        //Move to unit test
+        ////Move to unit test
+        //[Fact]
+        //public async void CheckPassword_ShouldBeTrue_WhenPasswordsAreIdentic()
+        //{
+        //    //Arrange
+        //    var user = await CreateUser();
+        //    if (user == null)
+        //    {
+        //        Assert.Fail("Error when create a new user");
+        //        return;
+        //    }
+
+        //    //Act
+        //    var result = _userRepository.CheckPassword(user, PASSWORD);
+
+        //    //Assert
+        //    Assert.True(result);
+        //    await ClearUser();
+        //}
+
+        ////Move to unit test
+        //[Fact]
+        //public async void CheckPassword_ShouldBeFalse_WhenPasswordsAreDifferent()
+        //{
+        //    //Arrange
+        //    var user = await CreateUser();
+        //    if (user == null)
+        //    {
+        //        Assert.Fail("Error when create a new user");
+        //        return;
+        //    }
+
+        //    //Act
+        //    var result = _userRepository.CheckPassword(user, "123Password!");
+
+        //    //Assert
+        //    Assert.False(result);
+        //    await ClearUser();
+        //}
+
+        ////Move to unit test
+        //[Fact]
+        //public void HashPassword_SoulBeTrue_WhenPasswordHasBeenHashed()
+        //{
+        //    //Arrange
+        //    var user = new User(FIRSTNAME, LASTNAME, EMAIL, PASSWORD);
+
+        //    //Act
+        //    _userRepository.HashPassword(user);
+
+        //    //Assert
+        //    Assert.True(
+        //        !string.IsNullOrEmpty(user.Password) && 
+        //        user.Password != PASSWORD);
+
+        //}
+
         [Fact]
-        public async void CheckPassword_ShouldBeTrue_WhenPasswordsAreIdentic()
+        public async void GetUsers_ShouldBeReturnAListOfUser()
         {
             //Arrange
-            var user = await CreateUser();
-            if (user == null)
-            {
-                Assert.Fail("Error when create a new user");
-                return;
-            }
+            await CreateUser();
 
             //Act
-            var result = _userRepository.CheckPassword(user, PASSWORD);
+            var result = await _userRepository.GetUsers();
 
             //Assert
-            Assert.True(result);
-            await ClearUser();
-        }
-
-        //Move to unit test
-        [Fact]
-        public async void CheckPassword_ShouldBeFalse_WhenPasswordsAreDifferent()
-        {
-            //Arrange
-            var user = await CreateUser();
-            if (user == null)
-            {
-                Assert.Fail("Error when create a new user");
-                return;
-            }
-
-            //Act
-            var result = _userRepository.CheckPassword(user, "123Password!");
-
-            //Assert
-            Assert.False(result);
-            await ClearUser();
-        }
-
-        //Move to unit test
-        [Fact]
-        public void HashPassword_SoulBeTrue_WhenPasswordHasBeenHashed()
-        {
-            //Arrange
-            var user = new User(FIRSTNAME, LASTNAME, EMAIL, PASSWORD);
-
-            //Act
-            _userRepository.HashPassword(user);
-
-            //Assert
-            Assert.True(
-                !string.IsNullOrEmpty(user.Password) && 
-                user.Password != PASSWORD);
-
+            Assert.NotEmpty(result);
+            ClearUser();
         }
 
         [Fact]
@@ -141,7 +155,7 @@ namespace Infrastructure.Integrationtest.Repositories
         }
 
         [Fact]
-        public async void GetById_ShouldBeTrue_WhenUserByExpectedIdExist()
+        public async void GetById_ShouldBeTrue_WhenUserWithExpectedIdExist()
         {
             //Arrange
             var createdUser = await CreateUser();
@@ -152,7 +166,7 @@ namespace Infrastructure.Integrationtest.Repositories
             }
 
             //Act
-            var user = await _userRepository.GetById(createdUser.Id.ToString());
+            var user = await _userRepository.GetById(createdUser.Id);
 
             //Assert
             Assert.NotNull(user);
