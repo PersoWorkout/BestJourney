@@ -16,7 +16,7 @@ namespace Domain.Models
         public string Lastname { get; set; } = lastname;
         public string Email { get; set; } = email;
         public string Password { get; set; } = password;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public List<UserJourney> UsersJourneys { get; set; } = [];
 
@@ -26,7 +26,7 @@ namespace Domain.Models
             if(lastname.IsValid()) Lastname = lastname;
             if(email.IsValidEmail()) Email = email;
             if(password.IsValidPassword()) Password = password;
-            UpdatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.Now;
         }
     }
 }

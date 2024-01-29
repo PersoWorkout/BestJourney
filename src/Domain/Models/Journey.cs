@@ -19,7 +19,7 @@ namespace Domain.Models
         public string City { get; set; } = city;
         public decimal Price { get; set; } = price;
         public bool IsActive { get; set; } = isActive;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public List<UserJourney> UsersJourneys { get; set; } = [];
 
@@ -37,7 +37,7 @@ namespace Domain.Models
             City = city;
             Price = price;
             IsActive = isActive;
-            UpdatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.Now;
         }
     }
 }

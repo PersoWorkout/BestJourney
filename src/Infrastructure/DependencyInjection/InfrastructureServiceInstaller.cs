@@ -15,6 +15,8 @@ namespace Infrastructure.DependencyInjection
             this IServiceCollection services, 
             IConfiguration configuration) 
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BestJourneyDbContext>(options =>
                 options.UseNpgsql(connectionString));
