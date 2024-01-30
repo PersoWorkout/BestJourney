@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces;
+using Domain.Utils;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Models
@@ -31,11 +32,11 @@ namespace Domain.Models
             decimal price, 
             bool isActive)
         {
-            Name = name;
-            Description = description;
-            Country = country;
-            City = city;
-            Price = price;
+            if(name.IsValid()) Name = name;
+            if(description.IsValid()) Description = description;
+            if(country.IsValid()) Country = country;
+            if(city.IsValid()) City = city;
+            if(price > 0m) Price = price;
             IsActive = isActive;
             UpdatedAt = DateTime.Now;
         }
