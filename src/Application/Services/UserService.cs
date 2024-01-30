@@ -53,7 +53,7 @@ namespace Application.Services
 
             await _userRepository.Delete(user);
 
-            return Result<UserResponse>.Success(new UserResponse());
+            return Result<UserResponse>.Success();
         }
 
         public async Task<Result<IEnumerable<UserResponse>>> GetUsers()

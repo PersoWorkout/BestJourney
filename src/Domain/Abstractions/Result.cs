@@ -34,6 +34,7 @@
         public T? Data { get; }
 
         public static Result<T> Success(T data) => new(true, Error.None, data);
+        public static Result<T> Success() => new(true, Error.None);
 
         public static Result<T> Failure(Error error) => new(false, error);
     }
