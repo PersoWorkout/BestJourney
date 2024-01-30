@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
@@ -14,6 +15,8 @@ namespace Infrastructure.Data
         {
             modelBuilder.Entity<UserJourney>()
                 .HasKey(e => new { e.UserId, e.JourneyId });
+
+            modelBuilder.Seed();
         }
     }
 }
