@@ -1,11 +1,23 @@
-﻿using Domain.Models;
+﻿using Application.Interfaces.Users;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Integrationtest.Repositories
 {
-    public class UserRepositoryTest(WebApplicationFactory factory): 
-        BaseIntegrationTest(factory)
+    public class UserRepositoryTest: 
+        BaseIntegrationTest
     {
+
+        protected readonly IUserRepository _userRepository;
+
+        public UserRepositoryTest(WebApplicationFactory factory):
+            base(factory)
+        {
+            _userRepository = _scope.ServiceProvider
+                .GetRequiredService<IUserRepository>();
+        }
+
         private const string FIRSTNAME = "John";
         private const string LASTNAME = "Doe";
         private const string EMAIL = "john.doe@example.com";
@@ -69,7 +81,7 @@ namespace Infrastructure.Integrationtest.Repositories
         //}
 
         [Fact]
-        public async void GetUsers_ShouldBeReturnAListOfUser()
+        public async void GetUsers_ShouldReturnAListOfUser()
         {
             //Arrange
             await CreateUser();

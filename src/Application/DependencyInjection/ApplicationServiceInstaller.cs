@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Users;
+﻿using Application.Interfaces.Journeys;
+using Application.Interfaces.Users;
 using Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -11,6 +12,7 @@ namespace Application.DependencyInjection
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJourneyService, JourneyService>();
 
             return services;
         }

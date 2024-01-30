@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Hasher;
+using Application.Interfaces.Journeys;
 using Application.Interfaces.Users;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -22,6 +23,7 @@ namespace Infrastructure.DependencyInjection
                 options.UseNpgsql(connectionString));
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IJourneyRepository, JourneyRepository>();
             services.AddScoped<IHashService, HashService>();
 
             return services;

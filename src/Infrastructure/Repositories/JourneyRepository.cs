@@ -1,39 +1,40 @@
 ﻿using Application.Interfaces.Journeys;
 using Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class JourneyRepository : IJourneyRepository
+    public class JourneyRepository(
+        BestJourneyDbContext dbContext) : IJourneyRepository
     {
+        private readonly BestJourneyDbContext _dbContext = dbContext;
 
-        public Task<IEnumerable<Journey>> GetJourneys()
+        public async Task<IEnumerable<Journey>> GetJourneys()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Journeys.ToListAsync();
         }
 
-        public Task Create(Journey journey)
+        public async Task Create(Journey journey)
         {
-            throw new NotImplementedException();
+            await _dbContext.Journeys.AddAsync(journey);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task<Journey?> GetById(Guid id)
+        public async Task<Journey?> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Journeys.FindAsync(id);
         }
 
-        public Task SaveChanges(Journey journey)
+        public async Task SaveChanges(Journey journey)
         {
-            throw new NotImplementedException();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task Delete(Journey journey)
+        public async Task Delete(Journey journey)
         {
-            throw new NotImplementedException();
+            _dbContext.Journeys.Remove(journey);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
