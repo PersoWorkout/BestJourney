@@ -5,7 +5,7 @@ namespace Application.UnitTest.Fakers.Users
 {
     public class FakeUserRepository : IUserRepository
     {
-        private readonly List<User> _users = new List<User>();
+        private readonly List<User> _users = [];
 
         public async Task<IEnumerable<User>> GetUsers()
         {
@@ -43,13 +43,14 @@ namespace Application.UnitTest.Fakers.Users
                 () => _users.FirstOrDefault(u => u.Email == email));
         }
 
-        public bool CheckPassword(User user, string password)
+        public static bool CheckPassword(User user, string password)
         {
             return user.Password == password;
         }
 
-        public bool HashPassword(User user)
+        public static bool HashPassword(User user)
         {
+            user.Password = user.Password;
             return true;
         }
 

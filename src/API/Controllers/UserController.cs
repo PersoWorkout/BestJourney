@@ -44,20 +44,20 @@ namespace API.Controllers
                     });
         }
 
-        [HttpPost]
-        public async Task<IResult> Create([FromBody] CreateUserValidator payload)
-        {
-            var result = await _userService.Create(payload);
+        //[HttpPost]
+        //public async Task<IResult> Create([FromBody] CreateUserValidator payload)
+        //{
+        //    var result = await _userService.Create(payload);
 
-            return result.IsSucess ?
-                Results.Created() :
-                Results.Problem(
-                    statusCode: StatusCodes.Status400BadRequest,
-                    title: "Bad Request",
-                    extensions: new Dictionary<string, object?>
-                    {
-                        {"errors", new [] {result.Error } }
-                    });
-        }
+        //    return result.IsSucess ?
+        //        Results.Created() :
+        //        Results.Problem(
+        //            statusCode: StatusCodes.Status400BadRequest,
+        //            title: "Bad Request",
+        //            extensions: new Dictionary<string, object?>
+        //            {
+        //                {"errors", new [] {result.Error } }
+        //            });
+        //}
     }
 }

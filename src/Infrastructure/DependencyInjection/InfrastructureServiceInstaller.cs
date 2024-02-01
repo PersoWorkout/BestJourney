@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Hasher;
+﻿using Application.Interfaces;
 using Application.Interfaces.Journeys;
 using Application.Interfaces.Users;
 using Infrastructure.Data;

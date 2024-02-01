@@ -20,7 +20,11 @@ namespace Domain.Models
         public DateTime? UpdatedAt { get; set; }
         public List<UserJourney> UsersJourneys { get; set; } = [];
 
-        public void Update(string firstname, string lastname, string email, string password)
+        public void Update(
+            string firstname = "", 
+            string lastname = "", 
+            string email = "", 
+            string password = "")
         {
             if(firstname.IsValid()) Firstname = firstname;
             if(lastname.IsValid()) Lastname = lastname;

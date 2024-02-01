@@ -1,6 +1,6 @@
-﻿using Application.Interfaces.Hasher;
+﻿using Application.Interfaces;
 
-namespace Application.UnitTest.Fakers
+namespace Application.UnitTest.Fakers.Auth
 {
     public class FakeHashService : IHashService
     {

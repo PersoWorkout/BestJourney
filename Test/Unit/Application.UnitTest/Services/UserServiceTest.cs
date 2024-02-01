@@ -1,23 +1,23 @@
 ﻿using Application.Interfaces.Users;
 using Application.Services;
-using Application.UnitTest.Fakers;
 using Application.UnitTest.Fakers.Users;
 using Domain.DTOs.Validators.Users;
 using Domain.Errors;
+using Domain.Models;
 
 namespace Application.UnitTest.Services
 {
     public class UserServiceTest
     {
         private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
 
         public UserServiceTest() 
         {
-            var userRepository = new FakeUserRepository();
+            _userRepository = new FakeUserRepository();
             var mapper = FakeUserMapper.Create();
-            var hashService = new FakeHashService();
 
-            _userService = new UserService(userRepository, mapper, hashService);
+            _userService = new UserService(_userRepository, mapper);
         }
 
         private const string DEFAULT_FIRSTNAME = "John";
@@ -25,64 +25,61 @@ namespace Application.UnitTest.Services
         private const string DEFAULT_EMAIL = "john.doe@example.com";
         private const string DEFAULT_PASSWORD = "Password123!";
 
-        [Fact]
-        public async void Create_ShouldBeSuccess_WhenPayloadIsValid()
-        {
-            //Arrange
-            var payload = CreateValidCreationPayload();
+        //[Fact]
+        //public async void Create_ShouldBeSuccess_WhenPayloadIsValid()
+        //{
+        //    //Arrange
+        //    var payload = CreateValidCreationPayload();
 
-            //Act
-            var result = await _userService.Create(payload);
+        //    //Act
+        //    var result = await _userService.Create(payload);
 
-            //Assert
-            Assert.True(result.IsSucess);
-        }
+        //    //Assert
+        //    Assert.True(result.IsSucess);
+        //}
 
-        [Fact]
-        public async void Create_ShouldBeFailure_WhenPayloadIsInvalid()
-        {
-            //Arrange
-            var payload = CreateInvalidCreationPayload();
+        //[Fact]
+        //public async void Create_ShouldBeFailure_WhenPayloadIsInvalid()
+        //{
+        //    //Arrange
+        //    var payload = CreateInvalidCreationPayload();
 
-            //Act
-            var result = await _userService.Create(payload);
+        //    //Act
+        //    var result = await _userService.Create(payload);
 
-            //Assert
-            Assert.True(result.IsFailure);
-            Assert.Equal(UserError.InvalidPayload, result.Error);
-        }
+        //    //Assert
+        //    Assert.True(result.IsFailure);
+        //    Assert.Equal(UserError.InvalidPayload, result.Error);
+        //}
 
-        [Fact]
-        public async void Create_ShouldBeFailure_WhenEmailAlreadyUsed()
-        {
-            //Arrange
-            var firstPayload = CreateValidCreationPayload();
-            var firstResult = await _userService.Create(firstPayload);
+        //[Fact]
+        //public async void Create_ShouldBeFailure_WhenEmailAlreadyUsed()
+        //{
+        //    //Arrange
+        //    var firstPayload = CreateValidCreationPayload();
+        //    var firstResult = await _userService.Create(firstPayload);
 
-            if (firstResult.IsFailure) Assert.Fail("Error during first creation");
+        //    if (firstResult.IsFailure) Assert.Fail("Error during first creation");
 
 
-            var secondPayload = CreateValidCreationPayload();
+        //    var secondPayload = CreateValidCreationPayload();
 
-            //Act
-            var result = await _userService.Create(secondPayload);
+        //    //Act
+        //    var result = await _userService.Create(secondPayload);
 
-            //Assert
-            Assert.True(result.IsFailure);
-            Assert.Equal(UserError.EmailAlreadyUsed, result.Error);
-        }
+        //    //Assert
+        //    Assert.True(result.IsFailure);
+        //    Assert.Equal(UserError.EmailAlreadyUsed, result.Error);
+        //}
 
         [Fact]
         public async void Delete_ShouldBeSuccess_WhenUserExist()
         {
             //Arrange
-            var firstPayload = CreateValidCreationPayload();
-            var firstResult = await _userService.Create(firstPayload);
-
-            if (firstResult.IsFailure) Assert.Fail("Error during first creation");
+            var user = await InsertNewUser();
 
             //Act
-            var result = await _userService.Delete(firstResult.Data!.Id);
+            var result = await _userService.Delete(user.Id.ToString());
 
             //Assert
             Assert.True(result.IsSucess);
@@ -120,8 +117,7 @@ namespace Application.UnitTest.Services
         public async void GetUsers_ShouldBeSuccess()
         {
             //Arrange
-            var firstPayload = CreateValidCreationPayload();
-            await _userService.Create(firstPayload);
+            await InsertNewUser();
 
             //Act
             var result = await _userService.GetUsers();
@@ -134,15 +130,14 @@ namespace Application.UnitTest.Services
         public async void GetById_ShouldBeSuccess_WhenUserExist()
         {
             //Arrange
-            var firstPayload = CreateValidCreationPayload();
-            var firstResult = await _userService.Create(firstPayload);
+            var user = await InsertNewUser();
 
             //Act
-            var result = await _userService.GetById(firstResult.Data!.Id);
+            var result = await _userService.GetById(user.Id.ToString());
 
             //Assert
             Assert.True(result.IsSucess);
-            Assert.True(firstResult.Data.Email == result.Data.Email);
+            Assert.True(user.Email == result.Data.Email);
         }
 
         [Fact]
@@ -173,74 +168,71 @@ namespace Application.UnitTest.Services
             Assert.Equal(UserError.NotFound, result.Error);
         }
 
-        [Fact]
-        public async void Login_SouldBeSuccess_WhenLoginSuccessfully()
-        {
-            //Arrange
-            var createPayload = CreateValidCreationPayload();
-            var firstResult = await _userService.Create(createPayload);
+        //[Fact]
+        //public async void Login_SouldBeSuccess_WhenLoginSuccessfully()
+        //{
+        //    //Arrange
+        //    var createPayload = CreateValidCreationPayload();
+        //    var firstResult = await _userService.Create(createPayload);
 
-            if (firstResult.IsFailure) Assert.Fail("Error during first creation");
+        //    if (firstResult.IsFailure) Assert.Fail("Error during first creation");
 
-            var loginPayload = CreateValidLoginPayload();
+        //    var loginPayload = CreateValidLoginPayload();
 
-            //Act
-            var result = await _userService.Login(loginPayload);
+        //    //Act
+        //    var result = await _userService.Login(loginPayload);
 
-            //Assert
-            Assert.True(result.IsSucess);
-        }
+        //    //Assert
+        //    Assert.True(result.IsSucess);
+        //}
 
-        [Fact]
-        public async void Login_SouldBeFailure_WhenPayloadIsInvalid()
-        {
-            //Arrange
-            var loginPayload = CreateInvalidLoginPayload();
+        //[Fact]
+        //public async void Login_SouldBeFailure_WhenPayloadIsInvalid()
+        //{
+        //    //Arrange
+        //    var loginPayload = CreateInvalidLoginPayload();
 
-            //Act
-            var result = await _userService.Login(loginPayload);
+        //    //Act
+        //    var result = await _userService.Login(loginPayload);
 
-            //Assert
-            Assert.Equal(UserError.InvalidPayload, result.Error);
-        }
+        //    //Assert
+        //    Assert.Equal(UserError.InvalidPayload, result.Error);
+        //}
 
-        [Fact]
-        public async void Login_SouldBeFailure_WhenEmailNotExist()
-        {
-            //Arrange
-            var loginPayload = CreateValidLoginPayload(
-                "unasigned@unasigned.com", 
-                "Password123!");
+        //[Fact]
+        //public async void Login_SouldBeFailure_WhenEmailNotExist()
+        //{
+        //    //Arrange
+        //    var loginPayload = CreateValidLoginPayload(
+        //        "unasigned@unasigned.com", 
+        //        "Password123!");
 
-            //Act
-            var result = await _userService.Login(loginPayload);
+        //    //Act
+        //    var result = await _userService.Login(loginPayload);
 
-            //Assert
-            Assert.Equal(UserError.InvalidCredentials, result.Error);
-        }
+        //    //Assert
+        //    Assert.Equal(UserError.InvalidCredentials, result.Error);
+        //}
 
-        [Fact]
-        public async void Login_SouldBeFailure_WhenPasswordNotMatch()
-        {
-            //Arrange
-            var loginPayload = CreateValidLoginPayload(
-                password: "Password123!");
+        //[Fact]
+        //public async void Login_SouldBeFailure_WhenPasswordNotMatch()
+        //{
+        //    //Arrange
+        //    var loginPayload = CreateValidLoginPayload(
+        //        password: "Password123!");
 
-            //Act
-            var result = await _userService.Login(loginPayload);
+        //    //Act
+        //    var result = await _userService.Login(loginPayload);
 
-            //Assert
-            Assert.Equal(UserError.InvalidCredentials, result.Error);
-        }
+        //    //Assert
+        //    Assert.Equal(UserError.InvalidCredentials, result.Error);
+        //}
 
         [Fact]
         public async void Update_SouldBeSuccess_WhenPayloadIsValidAndUserExist()
         {
             //Arrange
-            var createPayload = CreateValidCreationPayload();
-            var firstResult = await _userService.Create(createPayload);
-
-            if (firstResult.IsFailure) Assert.Fail("Error during first creation");
+            var user = await InsertNewUser();
 
             const string newFirstname = "Jane";
 
@@ -248,7 +240,7 @@ namespace Application.UnitTest.Services
                 firstname: newFirstname);
 
             //Act
-            var result = await _userService.Update(firstResult.Data!.Id, payload);
+            var result = await _userService.Update(user.Id.ToString(), payload);
 
             //Assert
             Assert.True(result.IsSucess);
@@ -274,15 +266,11 @@ namespace Application.UnitTest.Services
         public async void Update_SouldBeFailure_WhenPayloadIsInvalid()
         {
             //Arrange
-            var createPayload = CreateValidCreationPayload();
-            var firstResult = await _userService.Create(createPayload);
-
-            if (firstResult.IsFailure) Assert.Fail("Error during first creation");
-
+            var user = await InsertNewUser();
             var payload = CreatePayloadToUpdate();
 
             //Act
-            var result = await _userService.Update(firstResult.Data!.Id, payload);
+            var result = await _userService.Update(user.Id.ToString(), payload);
 
             //Assert
             Assert.Equal(UserError.InvalidPayload, result.Error);
@@ -308,88 +296,97 @@ namespace Application.UnitTest.Services
         public async void Update_SouldBeFailure_WhenNewEmailIsAlreadyUsed()
         {
             //Arrange
-            var firstCreatePayload = CreateValidCreationPayload();
-            var firstResult = await _userService.Create(firstCreatePayload);
-            if (firstResult.IsFailure) Assert.Fail("Error during first creation");
+            var user = await InsertNewUser();
 
             const string newEmail = "jane.doe@example.com";
-
-            var secondCreatePayload = CreateValidCreationPayload(
-                email: newEmail);
-            var secondResult = await _userService.Create(secondCreatePayload);
-            if (secondResult.IsFailure) Assert.Fail("Error during first creation");
+            await InsertNewUser(email: newEmail);
 
             var payload = CreatePayloadToUpdate(
                 email: newEmail);
 
             //Act
-            var result = await _userService.Update(firstResult.Data!.Id, payload);
+            var result = await _userService.Update(user.Id.ToString(), payload);
 
             //Assert
             Assert.Equal(UserError.EmailAlreadyUsed, result.Error);
         }
 
-        private static CreateUserValidator CreateValidCreationPayload(
-            string firstname = DEFAULT_FIRSTNAME,
-            string lastname = DEFAULT_LASTNAME,
-            string email = DEFAULT_EMAIL,
-            string password = DEFAULT_PASSWORD)
-        {
-            return new CreateUserValidator
-            {
-                Firstname = firstname,
-                Lastname = lastname,
-                Email = email,
-                Password = password,
-                PasswordConfirmation = password
-            };
-        }
+        //private static CreateUserValidator CreateValidCreationPayload(
+        //    string firstname = DEFAULT_FIRSTNAME,
+        //    string lastname = DEFAULT_LASTNAME,
+        //    string email = DEFAULT_EMAIL,
+        //    string password = DEFAULT_PASSWORD)
+        //{
+        //    return new CreateUserValidator
+        //    {
+        //        Firstname = firstname,
+        //        Lastname = lastname,
+        //        Email = email,
+        //        Password = password,
+        //        PasswordConfirmation = password
+        //    };
+        //}
 
-        private static CreateUserValidator CreateInvalidCreationPayload()
-        {
-            return new CreateUserValidator
-            {
-                Firstname = DEFAULT_FIRSTNAME,
-                Lastname = string.Empty,
-                Email = DEFAULT_EMAIL,
-                Password = DEFAULT_PASSWORD,
-                PasswordConfirmation = DEFAULT_PASSWORD
-            };
-        }
+        //private static CreateUserValidator CreateInvalidCreationPayload()
+        //{
+        //    return new CreateUserValidator
+        //    {
+        //        Firstname = DEFAULT_FIRSTNAME,
+        //        Lastname = string.Empty,
+        //        Email = DEFAULT_EMAIL,
+        //        Password = DEFAULT_PASSWORD,
+        //        PasswordConfirmation = DEFAULT_PASSWORD
+        //    };
+        //}
 
-        private static LoginUserValidator CreateValidLoginPayload(
-            string email = DEFAULT_EMAIL,
-            string password = DEFAULT_PASSWORD)
-        {
-            return new LoginUserValidator
-            {
-                Email = email,
-                Password = password,
-            };
-        }
+        //private static LoginUserValidator CreateValidLoginPayload(
+        //    string email = DEFAULT_EMAIL,
+        //    string password = DEFAULT_PASSWORD)
+        //{
+        //    return new LoginUserValidator
+        //    {
+        //        Email = email,
+        //        Password = password,
+        //    };
+        //}
 
-        private static LoginUserValidator CreateInvalidLoginPayload()
-        {
-            return new LoginUserValidator
-            {
-                Email = "john.doe",
-                Password = "pass",
-            };
-        }
+        //private static LoginUserValidator CreateInvalidLoginPayload()
+        //{
+        //    return new LoginUserValidator
+        //    {
+        //        Email = "john.doe",
+        //        Password = "pass",
+        //    };
+        //}
 
         private static UpdateUserValidator CreatePayloadToUpdate(
             string firstname = "",
             string lastname = "",
-            string email = "",
-            string password = "")
+            string email = "")
         {
             return new UpdateUserValidator
             {
                 Firstname = firstname,
                 Lastname = lastname,
-                Email = email,
-                Password = password
+                Email = email
             };
+        }
+
+        private async Task<User> InsertNewUser(
+            string firstname = DEFAULT_FIRSTNAME,
+            string lastname = DEFAULT_LASTNAME,
+            string email = DEFAULT_EMAIL,
+            string password = DEFAULT_PASSWORD)
+        {
+            var user = new User(
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
+                password: password);
+
+            await _userRepository.Create(user);
+
+            return user;
         }
 
     }

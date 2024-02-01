@@ -36,8 +36,7 @@ namespace Domain.UnitTest.DTOs.Users
             {
                 Firstname = "John",
                 Lastname = "Doe",
-                Email = "john.doe@example.com",
-                Password = "Password123!"
+                Email = "john.doe@example.com"
             };
         }
 

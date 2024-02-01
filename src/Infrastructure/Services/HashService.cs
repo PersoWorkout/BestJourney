@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Hasher;
+﻿using Application.Interfaces;
 
 namespace Infrastructure.Services
 {
