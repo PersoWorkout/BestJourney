@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Users;
 using Domain.Models;
 
-namespace Application.UnitTest.Fakers
+namespace Application.UnitTest.Fakers.Users
 {
     public class FakeUserRepository : IUserRepository
     {
@@ -21,7 +21,7 @@ namespace Application.UnitTest.Fakers
 
         public async Task<User> GetById(Guid id)
         {
-            return await Task.Run(() => 
+            return await Task.Run(() =>
             _users
             .FirstOrDefault(user => user.Id == id));
         }
