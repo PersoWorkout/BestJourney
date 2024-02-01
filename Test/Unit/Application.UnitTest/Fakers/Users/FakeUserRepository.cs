@@ -19,7 +19,7 @@ namespace Application.UnitTest.Fakers.Users
             return await Task.Run(() => user);
         }
 
-        public async Task<User> GetById(Guid id)
+        public async Task<User?> GetById(Guid id)
         {
             return await Task.Run(() =>
             _users
