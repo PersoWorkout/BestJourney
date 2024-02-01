@@ -4,7 +4,7 @@ using AutoMapper;
 using Domain.Abstractions;
 using Domain.DTOs.Responses;
 using Domain.DTOs.Validators.Users;
-using Domain.Errors.Users;
+using Domain.Errors;
 using Domain.Models;
 using Domain.Utils;
 

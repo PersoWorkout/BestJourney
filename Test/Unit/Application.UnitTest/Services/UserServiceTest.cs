@@ -3,7 +3,7 @@ using Application.Services;
 using Application.UnitTest.Fakers;
 using Application.UnitTest.Fakers.Users;
 using Domain.DTOs.Validators.Users;
-using Domain.Errors.Users;
+using Domain.Errors;
 
 namespace Application.UnitTest.Services
 {
