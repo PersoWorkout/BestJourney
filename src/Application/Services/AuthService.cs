@@ -8,6 +8,7 @@ using Domain.DTOs.Responses;
 using Domain.DTOs.Validators.Users;
 using Domain.Errors;
 using Domain.Models;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Services
 {
@@ -38,7 +39,6 @@ namespace Application.Services
 
             var user = _mapper.Map<User>(payload);
             user.Password = hashedPassword;
-
             await _userRepository.Create(user);
 
             var token = new TokenDTO(
@@ -63,10 +63,11 @@ namespace Application.Services
             if (!_hashService.Verify(payload.Password, user.Password))
                 return Result<AuthenticatedResponse>.Failure(UserError.InvalidCredentials);
 
-
             var token = new TokenDTO(
                 _tokenService.Generate(),
                 user.Id.ToString());
+
+            await _userRepository.Update(user);
 
             await _authRepository.Set(token);
 
@@ -105,6 +106,16 @@ namespace Application.Services
 
             return Result<UserResponse>.Success(
                 _mapper.Map<UserResponse>(user));
+        }
+
+        public async Task<Guid?> IsAuthenticated(string token)
+        {
+            if (string.IsNullOrEmpty(token)) return null;
+
+            var userId = await _authRepository.Get(token);
+            if (string.IsNullOrEmpty(userId)) return null;
+
+            return Guid.Parse(userId);
         }
     }
 }

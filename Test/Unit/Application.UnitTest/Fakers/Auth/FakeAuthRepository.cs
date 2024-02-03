@@ -20,10 +20,12 @@ namespace Application.UnitTest.Fakers.Auth
             }
         }
 
-        public async Task<TokenDTO?> Get(string token)
+        public async Task<string?> Get(string token)
         {
-            return await Task.Run(() => 
+            var tokenValue = await Task.Run(() => 
                 _tokens.FirstOrDefault(t => t.Token == token));
+
+            return tokenValue?.UserId;
         }
 
         public async Task Set(TokenDTO payload)

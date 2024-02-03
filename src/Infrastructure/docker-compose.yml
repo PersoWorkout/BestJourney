@@ -9,3 +9,10 @@ services:
       POSTGRES_DB: BestJourney
     ports:
       - 5432:5432
+
+  redis:
+    image: redis:alpine
+    hostname: redis
+    container_name: redis
+    ports:
+      - '${REDIS_PORT:-6379}:6379'

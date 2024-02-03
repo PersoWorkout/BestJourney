@@ -13,5 +13,6 @@ namespace Application.Interfaces.Auth
         Task<Result<UserResponse>> ResetPassword(
             string userId,
             ResetPasswordValidator payload);
+        Task<Guid?> IsAuthenticated(string token);
     }
 }

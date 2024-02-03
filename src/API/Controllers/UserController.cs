@@ -44,6 +44,28 @@ namespace API.Controllers
                     });
         }
 
+        [Authenticated]
+        [HttpGet]
+        [Route("/me")]
+        public async Task<IResult> Me()
+        {
+
+            var userId = HttpContext.Items["userId"]?.ToString();
+            if (userId is null) return Results.BadRequest();
+
+            var result = await _userService.GetById(userId);
+
+            return result.IsSucess ?
+                Results.Ok(result.Data) :
+                Results.Problem(
+                    statusCode: StatusCodes.Status400BadRequest,
+                    title: "Bad Request",
+                    extensions: new Dictionary<string, object?>
+                    {
+                        {"errors", new [] {result.Error } }
+                    });
+        }
+
         //[HttpPost]
         //public async Task<IResult> Create([FromBody] CreateUserValidator payload)
         //{

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using System.Text;
 
 namespace Infrastructure.Services
 {
@@ -6,15 +7,8 @@ namespace Infrastructure.Services
     {
         public string Generate()
         {
-            var token = Guid.NewGuid().ToByteArray();
-            return Convert.ToBase64String(token);
-        }
-
-        public string? ConvertToString(string token)
-        {
-            var tokenToBase64 = Convert.FromBase64String(token);
-
-            return tokenToBase64?.ToString();
+            return Convert.ToBase64String(
+                Encoding.ASCII.GetBytes(Guid.NewGuid().ToString()));
         }
     }
 }
