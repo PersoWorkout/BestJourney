@@ -5,10 +5,9 @@ using AutoMapper;
 using Domain.Abstractions;
 using Domain.DTOs;
 using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Users;
+using Domain.DTOs.Validators.Auth;
 using Domain.Errors;
 using Domain.Models;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Services
 {

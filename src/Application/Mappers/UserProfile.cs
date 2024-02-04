@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Users;
+using Domain.DTOs.Validators.Auth;
 using Domain.Models;
 using System;
 using System.Collections.Generic;

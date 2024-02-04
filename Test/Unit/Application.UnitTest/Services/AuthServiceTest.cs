@@ -1,12 +1,10 @@
-﻿using Application.Interfaces;
-using Application.Interfaces.Auth;
-using Application.Interfaces.Users;
-using Application.Services;
+﻿using Application.Services;
 using Application.UnitTest.Fakers.Auth;
 using Application.UnitTest.Fakers.Users;
 using AutoMapper;
+using Domain.DTOs;
 using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Users;
+using Domain.DTOs.Validators.Auth;
 using Domain.Errors;
 using Domain.Models;
 
@@ -14,12 +12,12 @@ namespace Application.UnitTest.Services
 {
     public class AuthServiceTest
     {
-        private readonly IAuthRepository _authRepository;
-        private readonly IAuthService _authService;
-        private readonly IHashService _hashService;
+        private readonly FakeAuthRepository _authRepository;
+        private readonly AuthService _authService;
+        private readonly FakeHashService _hashService;
         private readonly IMapper _mapper;
-        private readonly ITokenService _tokenService;
-        private readonly IUserRepository _userRepository;
+        private readonly FakeTokenService _tokenService;
+        private readonly FakeUserRepository _userRepository;
 
         public AuthServiceTest()
         {
@@ -43,7 +41,7 @@ namespace Application.UnitTest.Services
         private const string DEFAULT_PASSWORD = "Password123!";
 
         [Fact]
-        public async void Create_ShouldBeSuccess_WhenPayloadIsValid()
+        public async void Register_ShouldBeSuccess_WhenRegisterSuccessfully()
         {
             //Arrange
             var payload = CreateValidCreationPayload();
@@ -56,7 +54,7 @@ namespace Application.UnitTest.Services
         }
 
         [Fact]
-        public async void Create_ShouldReturnAuthenticatedResponse_WhenPayloadIsValid()
+        public async void Register_ShouldReturnAuthenticatedResponse_WhenRegisterSuccessfully()
         {
             //Arrange
             var payload = CreateValidCreationPayload();
@@ -69,7 +67,7 @@ namespace Application.UnitTest.Services
         }
 
         [Fact]
-        public async void Create_ShouldBeFailure_WhenPayloadIsInvalid()
+        public async void Register_ShouldBeFailure_WhenPayloadIsInvalid()
         {
             //Arrange
             var payload = CreateInvalidCreationPayload();
@@ -83,7 +81,7 @@ namespace Application.UnitTest.Services
         }
 
         [Fact]
-        public async void Create_ShouldBeFailure_WhenEmailAlreadyUsed()
+        public async void Register_ShouldBeFailure_WhenEmailAlreadyUsed()
         {
             //Arrange
             await CreateUser();
@@ -109,6 +107,20 @@ namespace Application.UnitTest.Services
 
             //Assert
             Assert.True(result.IsSucess);
+        }
+
+        [Fact]
+        public async void Login_SouldReturnAuthenticatedResponse_WhenLoginSuccessfully()
+        {
+            //Arrange
+            await CreateUser();
+            var payload = CreateValidLoginPayload();
+
+            //Act
+            var result = await _authService.Login(payload);
+
+            //Assert
+            Assert.IsType<AuthenticatedResponse>(result.Data);
         }
 
         [Fact]
@@ -154,7 +166,7 @@ namespace Application.UnitTest.Services
         }
 
         [Fact]
-        public async void ResetPassword_SouldBeSuccess()
+        public async void ResetPassword_SouldBeSuccess_WhenResetPasswordSuccessfully()
         {
             //Arrange
             var user = await CreateUser();
@@ -225,6 +237,54 @@ namespace Application.UnitTest.Services
             Assert.Equal(UserError.NotFound, result.Error);
         }
 
+        [Fact]
+        public async void IsAuthenticated_ShouldBeReturnAuthenticatedUserId_WhenUserIsAuthenticated()
+        {
+            //Arrange
+            var user = await CreateUser();
+
+            var token = Guid.NewGuid().ToString();
+
+            CreateSession(
+                user.Id.ToString(), 
+                token);
+
+            //Act
+            var result = await _authService.IsAuthenticated(token);
+
+            //Assert
+            Assert.Equal(user.Id, result);
+            
+        }
+
+        [Fact]
+        public async void IsAuthenticated_ShouldBeReturnNull_WhenTokenIsNull()
+        {
+            //Arrange
+            string? token = string.Empty;
+
+            //Act
+            var result = await _authService.IsAuthenticated(token);
+
+            //Assert
+            Assert.Null(result);
+
+        }
+
+        [Fact]
+        public async void IsAuthenticated_ShouldBeReturnNull_WhenUserNotAuthenticated()
+        {
+            //Arrange
+            string? token = Guid.NewGuid().ToString();
+
+            //Act
+            var result = await _authService.IsAuthenticated(token);
+
+            //Assert
+            Assert.Null(result);
+
+        }
+
         private static CreateUserValidator CreateValidCreationPayload(
             string firstname = DEFAULT_FIRSTNAME,
             string lastname = DEFAULT_LASTNAME,
@@ -292,6 +352,11 @@ namespace Application.UnitTest.Services
             await _userRepository.Create(user);
 
             return user;
+        }
+
+        private void CreateSession(string userId, string token)
+        {
+            _authRepository._tokens.Add(new TokenDTO(token, userId));
         }
     }
 }

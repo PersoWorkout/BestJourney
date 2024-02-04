@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Auth;
-using Domain.DTOs.Validators.Users;
+using Domain.DTOs.Validators.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

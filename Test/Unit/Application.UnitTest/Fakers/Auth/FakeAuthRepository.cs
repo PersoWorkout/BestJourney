@@ -5,7 +5,7 @@ namespace Application.UnitTest.Fakers.Auth
 {
     public class FakeAuthRepository : IAuthRepository
     {
-        private readonly List<TokenDTO> _tokens = [];
+        public readonly List<TokenDTO> _tokens = [];
 
         public async Task Delete(string token)
         {

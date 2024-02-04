@@ -1,7 +1,7 @@
 ﻿using Application.Mappers;
 using AutoMapper;
 using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Users;
+using Domain.DTOs.Validators.Auth;
 using Domain.Models;
 
 namespace Application.UnitTest.Mappers

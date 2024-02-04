@@ -1,6 +1,6 @@
-﻿using Domain.DTOs.Validators.Users;
+﻿using Domain.DTOs.Validators.Auth;
 
-namespace Domain.UnitTest.DTOs.Users
+namespace Domain.UnitTest.DTOs.Auth
 {
     public class CreateUserValidatorTest
     {

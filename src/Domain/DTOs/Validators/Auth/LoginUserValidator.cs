@@ -1,6 +1,6 @@
 ﻿using Domain.Utils;
 
-namespace Domain.DTOs.Validators.Users
+namespace Domain.DTOs.Validators.Auth
 {
     public class LoginUserValidator
     {

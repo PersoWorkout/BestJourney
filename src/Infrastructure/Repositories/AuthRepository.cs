@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
         {
             await _distributedCache.SetStringAsync(
                 payload.Token,
-                JsonConvert.SerializeObject(payload),
+                payload.UserId,
                 new DistributedCacheEntryOptions
                 {
                     AbsoluteExpiration = payload.ExpiratedAt
