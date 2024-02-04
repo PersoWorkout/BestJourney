@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces.Auth;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

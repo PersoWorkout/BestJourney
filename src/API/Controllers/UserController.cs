@@ -1,7 +1,4 @@
 ﻿using Application.Interfaces.Users;
-using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Users;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -13,22 +10,7 @@ namespace API.Controllers
     {
         private readonly IUserService _userService = userService;
 
-        //[HttpPost]
-        //public async Task<IResult> Login([FromBody] LoginUserValidator payload)
-        //{
-        //    var result = await _userService.Login(payload);
-
-        //    return result.IsSucess ?
-        //        Results.Ok(result.Data) :
-        //        Results.Problem(
-        //            statusCode: StatusCodes.Status400BadRequest,
-        //            title: "Bad Request",
-        //            extensions: new Dictionary<string, object?>
-        //            {
-        //                {"errors", new [] {result.Error } }
-        //            });
-        //}
-
+        [Authenticated]
         [HttpGet]
         public async Task<IResult> Get()
         {
@@ -45,8 +27,7 @@ namespace API.Controllers
         }
 
         [Authenticated]
-        [HttpGet]
-        [Route("/me")]
+        [HttpGet("/users/me")]
         public async Task<IResult> Me()
         {
 
@@ -65,21 +46,5 @@ namespace API.Controllers
                         {"errors", new [] {result.Error } }
                     });
         }
-
-        //[HttpPost]
-        //public async Task<IResult> Create([FromBody] CreateUserValidator payload)
-        //{
-        //    var result = await _userService.Create(payload);
-
-        //    return result.IsSucess ?
-        //        Results.Created() :
-        //        Results.Problem(
-        //            statusCode: StatusCodes.Status400BadRequest,
-        //            title: "Bad Request",
-        //            extensions: new Dictionary<string, object?>
-        //            {
-        //                {"errors", new [] {result.Error } }
-        //            });
-        //}
     }
 }

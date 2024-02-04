@@ -18,6 +18,7 @@ namespace API.Controllers
             return Results.Ok(journeys.Data);
         }
 
+        [Authenticated]
         [HttpPost]
         public async Task<IResult> Create([FromBody] CreateJourneyValidator payload)
         {
@@ -32,7 +33,7 @@ namespace API.Controllers
                         {"errors", new [] {journey.Error } }
                     });
         }
-
+       
         [HttpGet("{id}")]
         public async Task<IResult> GetById(string id)
         {
@@ -48,6 +49,7 @@ namespace API.Controllers
                     });
         }
 
+        [Authenticated]
         [HttpPut("{id}")]
         public async Task<IResult> Update(string id, [FromBody] UpdateJourneyValidator payload)
         {
@@ -63,6 +65,7 @@ namespace API.Controllers
                     });
         }
 
+        [Authenticated]
         [HttpDelete("{id}")]
         public async Task<IResult> Delete(string id)
         {

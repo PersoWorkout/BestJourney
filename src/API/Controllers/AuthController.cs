@@ -11,8 +11,7 @@ namespace API.Controllers
     {
         private readonly IAuthService _authService = authService;
 
-        [HttpPost]
-        [Route("/register")]
+        [HttpPost("/auth/register")]
         public async Task<IResult> Register(CreateUserValidator payload)
         {
             var result = await _authService
@@ -29,8 +28,7 @@ namespace API.Controllers
                     });
         }
 
-        [HttpPost]
-        [Route("/login")]
+        [HttpPost("/auth/login")]
         public async Task<IResult> Login(LoginUserValidator payload)
         {
             var result = await _authService
@@ -51,8 +49,7 @@ namespace API.Controllers
         public async Task<IResult> Logout()
         {
             var token = HttpContext.Request
-                .Headers["Authorization"]
-                .ToString();
+                .Headers.Authorization.ToString();
 
             await _authService.Logout(token);
 
