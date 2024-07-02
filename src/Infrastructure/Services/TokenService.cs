@@ -1,14 +1,13 @@
 ﻿using Application.Auth;
 using System.Text;
 
-namespace Infrastructure.Services
+namespace Infrastructure.Services;
+
+public class TokenService : ITokenService
 {
-    public class TokenService : ITokenService
+    public string Generate()
     {
-        public string Generate()
-        {
-            return Convert.ToBase64String(
-                Encoding.ASCII.GetBytes(Guid.NewGuid().ToString()));
-        }
+        return Convert.ToBase64String(
+            Encoding.ASCII.GetBytes(Guid.NewGuid().ToString()));
     }
 }

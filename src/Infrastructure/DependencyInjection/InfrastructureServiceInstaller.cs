@@ -9,34 +9,33 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.DependencyInjection
+namespace Infrastructure.DependencyInjection;
+
+public static class InfrastructureServiceInstaller
 {
-    public static class InfrastructureServiceInstaller
+    public static IServiceCollection AddInfrastructureServices(
+        this IServiceCollection services, 
+        IConfiguration configuration) 
     {
-        public static IServiceCollection AddInfrastructureServices(
-            this IServiceCollection services, 
-            IConfiguration configuration) 
-        {
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-            var dbConnectionString = configuration
-                .GetConnectionString("SqliteConnectionString");
-            services.AddDbContext<BestJourneyDbContext>(options =>
-                options.UseSqlite(dbConnectionString));
+        var dbConnectionString = configuration
+            .GetConnectionString("SqliteConnectionString");
+        services.AddDbContext<BestJourneyDbContext>(options =>
+            options.UseSqlite(dbConnectionString));
 
-            var redisConnectionString = configuration
-                .GetConnectionString("RedisConnectionString");
-            services.AddDistributedMemoryCache();
+        var redisConnectionString = configuration
+            .GetConnectionString("RedisConnectionString");
+        services.AddDistributedMemoryCache();
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IJourneyRepository, JourneyRepository>();
-            services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IJourneyRepository, JourneyRepository>();
+        services.AddScoped<IAuthRepository, AuthRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
 
-            services.AddScoped<IHashService, HashService>();
-            services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IHashService, HashService>();
+        services.AddScoped<ITokenService, TokenService>();
 
-            return services;
-        }
+        return services;
     }
 }
