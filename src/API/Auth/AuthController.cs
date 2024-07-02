@@ -1,20 +1,22 @@
-﻿using Application.Users;
+﻿using Application.Auth;
+using Domain.Auth.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Auth
 {
     [ApiController]
-    [Route("/users")]
-    public class UserController(
-        IUserService userService) : Controller
+    [Route("/auth")]
+    public class AuthController(
+        IAuthService authService) : Controller
     {
-        private readonly IUserService _userService = userService;
+        private readonly IAuthService _authService = authService;
 
-        [Authenticated]
-        [HttpGet]
-        public async Task<IResult> Get()
+        [HttpPost("/auth/register")]
+        public async Task<IResult> Register(CreateUserRequest payload)
         {
-            var result = await _userService.GetUsers();
+            var result = await _authService
+                .Register(payload);
+
             return result.IsSucess ?
                 Results.Ok(result.Data) :
                 Results.Problem(
@@ -26,15 +28,11 @@ namespace API.Controllers
                     });
         }
 
-        [Authenticated]
-        [HttpGet("/users/me")]
-        public async Task<IResult> Me()
+        [HttpPost("/auth/login")]
+        public async Task<IResult> Login(LoginUserRequest payload)
         {
-
-            var userId = HttpContext.Items["userId"]?.ToString();
-            if (userId is null) return Results.BadRequest();
-
-            var result = await _userService.GetById(userId);
+            var result = await _authService
+                .Login(payload);
 
             return result.IsSucess ?
                 Results.Ok(result.Data) :
@@ -45,6 +43,17 @@ namespace API.Controllers
                     {
                         {"errors", new [] {result.Error } }
                     });
+        }
+
+        [HttpDelete]
+        public async Task<IResult> Logout()
+        {
+            var token = HttpContext.Request
+                .Headers.Authorization.ToString();
+
+            await _authService.Logout(token);
+
+            return Results.NoContent();
         }
     }
 }

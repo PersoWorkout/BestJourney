@@ -1,22 +1,21 @@
-﻿using Application.Auth;
-using Domain.Auth.Validators;
+﻿using API.Attributes;
+using Application.Users;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Users
 {
     [ApiController]
-    [Route("/auth")]
-    public class AuthController(
-        IAuthService authService) : Controller
+    [Route("/users")]
+    public class UserController(
+        IUserService userService) : Controller
     {
-        private readonly IAuthService _authService = authService;
+        private readonly IUserService _userService = userService;
 
-        [HttpPost("/auth/register")]
-        public async Task<IResult> Register(CreateUserValidator payload)
+        [Authenticated]
+        [HttpGet]
+        public async Task<IResult> Get()
         {
-            var result = await _authService
-                .Register(payload);
-
+            var result = await _userService.GetUsers();
             return result.IsSucess ?
                 Results.Ok(result.Data) :
                 Results.Problem(
@@ -28,11 +27,15 @@ namespace API.Controllers
                     });
         }
 
-        [HttpPost("/auth/login")]
-        public async Task<IResult> Login(LoginUserRequest payload)
+        [Authenticated]
+        [HttpGet("/users/me")]
+        public async Task<IResult> Me()
         {
-            var result = await _authService
-                .Login(payload);
+
+            var userId = HttpContext.Items["userId"]?.ToString();
+            if (userId is null) return Results.BadRequest();
+
+            var result = await _userService.GetById(userId);
 
             return result.IsSucess ?
                 Results.Ok(result.Data) :
@@ -43,17 +46,6 @@ namespace API.Controllers
                     {
                         {"errors", new [] {result.Error } }
                     });
-        }
-
-        [HttpDelete]
-        public async Task<IResult> Logout()
-        {
-            var token = HttpContext.Request
-                .Headers.Authorization.ToString();
-
-            await _authService.Logout(token);
-
-            return Results.NoContent();
         }
     }
 }

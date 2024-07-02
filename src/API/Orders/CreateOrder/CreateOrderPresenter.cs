@@ -1,6 +1,6 @@
 ﻿using Domain.Orders;
 
-namespace API.Presenter.Orders
+namespace API.Orders.CreateOrder
 {
     public class CreateOrderPresenter
     {
@@ -21,7 +21,7 @@ namespace API.Presenter.Orders
                     {
                         id = order.JourneyId,
                         name = order.Journey.Name,
-                        location = $"{order.Journey.Country}/{order.Journey.City}",                                           
+                        location = $"{order.Journey.Country}/{order.Journey.City}",
                     }
                 }
             };

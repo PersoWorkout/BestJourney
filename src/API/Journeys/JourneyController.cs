@@ -1,12 +1,13 @@
-﻿using Application.Journeys;
-using Domain.Journeys.Validators;
+﻿using API.Attributes;
+using Application.Journeys;
+using Domain.Journeys.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Journeys
 {
     [ApiController]
     [Route("/journeys")]
-    public class JourneyController(IJourneyService journeyService) : 
+    public class JourneyController(IJourneyService journeyService) :
         Controller
     {
         private readonly IJourneyService _journeyService = journeyService;
@@ -20,7 +21,7 @@ namespace API.Controllers
 
         [Authenticated]
         [HttpPost]
-        public async Task<IResult> Create([FromBody] CreateJourneyValidator payload)
+        public async Task<IResult> Create([FromBody] CreateJourneyRequest payload)
         {
             var journey = await _journeyService.Create(payload);
             return journey.IsSucess ?
@@ -33,7 +34,7 @@ namespace API.Controllers
                         {"errors", new [] {journey.Error } }
                     });
         }
-       
+
         [HttpGet("{id}")]
         public async Task<IResult> GetById(string id)
         {
@@ -51,7 +52,7 @@ namespace API.Controllers
 
         [Authenticated]
         [HttpPut("{id}")]
-        public async Task<IResult> Update(string id, [FromBody] UpdateJourneyValidator payload)
+        public async Task<IResult> Update(string id, [FromBody] UpdateJourneyRequest payload)
         {
             var journey = await _journeyService.Update(id, payload);
             return journey.IsSucess ?
