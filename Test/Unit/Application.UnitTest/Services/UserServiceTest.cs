@@ -1,6 +1,6 @@
-﻿using Application.Interfaces.Users;
-using Application.Services;
+﻿using Application.Services;
 using Application.UnitTest.Fakers.Users;
+using Application.Users;
 using Domain.Users;
 using Domain.Users.Requests;
 

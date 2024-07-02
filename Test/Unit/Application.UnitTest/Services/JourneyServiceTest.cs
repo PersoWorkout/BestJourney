@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Journeys;
+﻿using Application.Journeys;
 using Application.Services;
 using Application.UnitTest.Fakers.Journeys;
 using Domain.Journeys;

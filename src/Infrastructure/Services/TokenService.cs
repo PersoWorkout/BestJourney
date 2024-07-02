@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Auth;
 using System.Text;
 
 namespace Infrastructure.Services

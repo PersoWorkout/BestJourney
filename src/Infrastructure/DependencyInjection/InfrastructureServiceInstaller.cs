@@ -1,8 +1,7 @@
-﻿using Application.Interfaces;
-using Application.Interfaces.Auth;
-using Application.Interfaces.Journeys;
-using Application.Interfaces.Orders;
-using Application.Interfaces.Users;
+﻿using Application.Auth;
+using Application.Journeys;
+using Application.Orders;
+using Application.Users;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;

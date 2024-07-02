@@ -1,6 +1,6 @@
 ﻿using Domain.Orders;
 
-namespace Application.Interfaces.Orders;
+namespace Application.Orders;
 public interface IOrderRepository
 {
     Task<IEnumerable<Order>> GetByUserId(Guid id);

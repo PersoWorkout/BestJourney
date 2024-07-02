@@ -1,4 +1,4 @@
-﻿using Application.Services;
+﻿using Application.Auth;
 using Application.UnitTest.Fakers.Auth;
 using Application.UnitTest.Fakers.Users;
 using AutoMapper;

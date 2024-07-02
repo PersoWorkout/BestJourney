@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Auth;
+﻿using Application.Auth;
 using Domain.Auth.Validators;
 using Microsoft.AspNetCore.Mvc;
 

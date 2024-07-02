@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Users;
+﻿using Application.Users;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Journeys;
+﻿using Application.Journeys;
 using Domain.Journeys;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Domain.DTOs.Validators.Orders;
 using Domain.Orders;
+using Domain.Orders.Requests;
 
-namespace Application.Mappers;
+namespace Application.Orders;
 
-public class OrderProfile: Profile
+public class OrderProfile : Profile
 {
     public OrderProfile()
     {
-        CreateMap<CreateOrderValidator, Order>()
+        CreateMap<CreateOrderRequest, Order>()
             .ForMember(dest => dest.JourneyId,
                 opt => opt.MapFrom(
                     src => Guid.Parse(src.JourneyId)));
@@ -20,7 +20,5 @@ public class OrderProfile: Profile
             .ForMember(dest => dest.Journey,
                 opt => opt.MapFrom(
                     src => src.Journey));
-
-        CreateMap<CreateOrderValidator, Order>();
     }
 }

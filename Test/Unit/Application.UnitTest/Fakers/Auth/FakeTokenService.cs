@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Auth;
 
 namespace Application.UnitTest.Fakers.Auth
 {

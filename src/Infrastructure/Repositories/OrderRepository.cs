@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Orders;
+﻿using Application.Orders;
 using Domain.Orders;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

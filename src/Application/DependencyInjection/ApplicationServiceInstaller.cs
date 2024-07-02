@@ -1,8 +1,7 @@
-﻿using Application.Interfaces.Auth;
-using Application.Interfaces.Journeys;
-using Application.Interfaces.Orders;
-using Application.Interfaces.Users;
-using Application.Services;
+﻿using Application.Auth;
+using Application.Journeys;
+using Application.Orders;
+using Application.Users;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 

@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Users;
+﻿using Application.Users;
 using Domain.Users;
 
 namespace Application.UnitTest.Fakers.Users
