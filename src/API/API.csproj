@@ -22,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Auth\Logout\" />
-    <Folder Include="Auth\Register\" />
     <Folder Include="Orders\GetOrdersById\" />
     <Folder Include="Orders\UpdateOrder\" />
   </ItemGroup>
