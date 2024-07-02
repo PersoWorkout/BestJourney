@@ -1,9 +1,8 @@
 ﻿using Application.Interfaces.Journeys;
 using Application.Services;
 using Application.UnitTest.Fakers.Journeys;
-using Domain.DTOs.Validators.Journeys;
-using Domain.Errors;
-using Domain.Models;
+using Domain.Journeys;
+using Domain.Journeys.Validators;
 
 namespace Application.UnitTest.Services
 {

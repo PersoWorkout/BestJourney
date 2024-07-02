@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Auth;
-using Domain.DTOs.Validators.Auth;
+using Domain.Auth.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,7 +29,7 @@ namespace API.Controllers
         }
 
         [HttpPost("/auth/login")]
-        public async Task<IResult> Login(LoginUserValidator payload)
+        public async Task<IResult> Login(LoginUserRequest payload)
         {
             var result = await _authService
                 .Login(payload);

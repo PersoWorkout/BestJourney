@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Users;
-using Domain.Models;
+using Domain.Users;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

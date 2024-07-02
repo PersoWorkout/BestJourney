@@ -1,10 +1,8 @@
 ﻿using Application.Interfaces.Journeys;
 using AutoMapper;
 using Domain.Abstractions;
-using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Journeys;
-using Domain.Errors;
-using Domain.Models;
+using Domain.Journeys;
+using Domain.Journeys.Validators;
 
 namespace Application.Services
 {

@@ -1,9 +1,8 @@
 ﻿using Application.Interfaces.Users;
 using Application.Services;
 using Application.UnitTest.Fakers.Users;
-using Domain.DTOs.Validators.Users;
-using Domain.Errors;
-using Domain.Models;
+using Domain.Users;
+using Domain.Users.Requests;
 
 namespace Application.UnitTest.Services
 {

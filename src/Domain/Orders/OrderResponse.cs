@@ -1,6 +1,6 @@
-﻿using Domain.Models;
+﻿using Domain.Journeys;
 
-namespace Domain.DTOs.Responses;
+namespace Domain.Orders;
 public class OrderResponse
 {
     public required Journey Journey { get; set; }

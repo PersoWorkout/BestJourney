@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Journeys;
-using Domain.DTOs.Validators.Journeys;
+using Domain.Journeys.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

@@ -1,4 +1,4 @@
-﻿using Domain.DTOs.Validators.Auth;
+﻿using Domain.Auth.Validators;
 
 namespace Domain.UnitTest.DTOs.Auth
 {

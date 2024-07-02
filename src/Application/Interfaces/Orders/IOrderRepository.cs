@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Orders;
 
 namespace Application.Interfaces.Orders;
 public interface IOrderRepository

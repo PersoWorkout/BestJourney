@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Orders;
 
 namespace API.Presenter.Orders
 {

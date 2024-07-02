@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Auth;
-using Domain.DTOs;
+using Domain.Auth;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Auth;
-using Domain.Models;
+using Domain.Auth.Validators;
+using Domain.Users;
 
 namespace Application.Mappers
 {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Abstractions;
-using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Journeys;
+using Domain.Journeys;
+using Domain.Journeys.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;

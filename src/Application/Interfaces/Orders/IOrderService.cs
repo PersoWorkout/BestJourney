@@ -1,6 +1,6 @@
 ﻿using Domain.Abstractions;
 using Domain.DTOs.Validators.Orders;
-using Domain.Models;
+using Domain.Orders;
 
 namespace Application.Interfaces.Orders;
 public interface IOrderService

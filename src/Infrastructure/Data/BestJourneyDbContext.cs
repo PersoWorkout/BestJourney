@@ -1,4 +1,6 @@
-﻿using Domain.Models;
+﻿using Domain.Journeys;
+using Domain.Orders;
+using Domain.Users;
 using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 

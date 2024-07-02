@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Users;
 
 namespace Domain.UnitTest.Models
 {

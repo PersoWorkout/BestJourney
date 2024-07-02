@@ -1,5 +1,5 @@
 ﻿using Application.Interfaces.Journeys;
-using Domain.Models;
+using Domain.Journeys;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

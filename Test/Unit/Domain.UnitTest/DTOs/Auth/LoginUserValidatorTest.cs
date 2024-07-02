@@ -1,4 +1,4 @@
-﻿using Domain.DTOs.Validators.Auth;
+﻿using Domain.Auth.Validators;
 
 namespace Domain.UnitTest.DTOs.Auth
 {
@@ -43,27 +43,27 @@ namespace Domain.UnitTest.DTOs.Auth
             Assert.False(result);
         }
 
-        private static LoginUserValidator CreateValidPayload()
+        private static LoginUserRequest CreateValidPayload()
         {
-            return new LoginUserValidator
+            return new LoginUserRequest
             {
                 Email = "john.doe@example.com",
                 Password = "Password123!"
             };
         }
 
-        private static LoginUserValidator CreatePayloadWithInvalidEmail()
+        private static LoginUserRequest CreatePayloadWithInvalidEmail()
         {
-            return new LoginUserValidator
+            return new LoginUserRequest
             {
                 Email = "johndoeexample.com",
                 Password = "Password123!"
             };
         }
 
-        private static LoginUserValidator CreatePayloadWithInvalidPassword()
+        private static LoginUserRequest CreatePayloadWithInvalidPassword()
         {
-            return new LoginUserValidator
+            return new LoginUserRequest
             {
                 Email = "john.doe@example.com",
                 Password = "pass"

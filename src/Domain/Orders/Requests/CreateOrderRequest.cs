@@ -1,7 +1,7 @@
 ﻿using Domain.Utils;
 
-namespace Domain.DTOs.Validators.Orders;
-public class CreateOrderValidator
+namespace Domain.Orders.Requests;
+public class CreateOrderRequest
 {
     public string JourneyId { get; set; }
     public int ParticipentCount { get; set; }

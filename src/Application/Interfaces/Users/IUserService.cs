@@ -1,6 +1,6 @@
 ﻿using Domain.Abstractions;
-using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Users;
+using Domain.Users;
+using Domain.Users.Requests;
 
 namespace Application.Interfaces.Users
 {

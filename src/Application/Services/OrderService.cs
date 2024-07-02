@@ -4,8 +4,9 @@ using Application.Interfaces.Users;
 using AutoMapper;
 using Domain.Abstractions;
 using Domain.DTOs.Validators.Orders;
-using Domain.Errors;
-using Domain.Models;
+using Domain.Journeys;
+using Domain.Orders;
+using Domain.Users;
 
 namespace Application.Services;
 

@@ -3,11 +3,10 @@ using Application.Interfaces.Auth;
 using Application.Interfaces.Users;
 using AutoMapper;
 using Domain.Abstractions;
+using Domain.Auth.Validators;
 using Domain.DTOs;
 using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Auth;
-using Domain.Errors;
-using Domain.Models;
+using Domain.Users;
 
 namespace Application.Services
 {
@@ -50,7 +49,7 @@ namespace Application.Services
                 new AuthenticatedResponse(token));
         }
 
-        public async Task<Result<AuthenticatedResponse>> Login(LoginUserValidator payload)
+        public async Task<Result<AuthenticatedResponse>> Login(LoginUserRequest payload)
         {
             if (!payload.Validate())
                 return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
@@ -84,7 +83,7 @@ namespace Application.Services
 
         public async Task<Result<UserResponse>> ResetPassword(
             string userId,
-            ResetPasswordValidator paylaod)
+            ResetPasswordRequest paylaod)
         {
             if (!paylaod.Validate())
                 return Result<UserResponse>.Failure(UserError.InvalidPayload);

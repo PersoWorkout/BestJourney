@@ -1,8 +1,7 @@
 ﻿using Application.Mappers;
 using AutoMapper;
-using Domain.DTOs.Responses;
 using Domain.DTOs.Validators.Auth;
-using Domain.Models;
+using Domain.Users;
 
 namespace Application.UnitTest.Mappers
 {

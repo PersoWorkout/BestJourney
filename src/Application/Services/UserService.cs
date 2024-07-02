@@ -2,9 +2,8 @@
 using Application.Interfaces.Users;
 using AutoMapper;
 using Domain.Abstractions;
-using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Users;
-using Domain.Errors;
+using Domain.Users;
+using Domain.Users.Requests;
 
 namespace Application.Services
 {

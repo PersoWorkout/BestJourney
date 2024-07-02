@@ -1,4 +1,4 @@
-﻿using Domain.Models;
+﻿using Domain.Journeys;
 using Domain.UnitTest.Utils;
 
 namespace Domain.UnitTest.Models

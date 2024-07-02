@@ -2,11 +2,10 @@
 using Application.UnitTest.Fakers.Auth;
 using Application.UnitTest.Fakers.Users;
 using AutoMapper;
+using Domain.Auth.Validators;
 using Domain.DTOs;
 using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Auth;
-using Domain.Errors;
-using Domain.Models;
+using Domain.Users;
 
 namespace Application.UnitTest.Services
 {
@@ -306,31 +305,31 @@ namespace Application.UnitTest.Services
             return new CreateUserValidator();
         }
 
-        private static LoginUserValidator CreateValidLoginPayload(
+        private static LoginUserRequest CreateValidLoginPayload(
             string email = DEFAULT_EMAIL,
             string password = DEFAULT_PASSWORD)
         {
-            return new LoginUserValidator
+            return new LoginUserRequest
             {
                 Email = email,
                 Password = password,
             };
         }
 
-        private static LoginUserValidator CreateInvalidLoginPayload()
+        private static LoginUserRequest CreateInvalidLoginPayload()
         {
-            return new LoginUserValidator
+            return new LoginUserRequest
             {
                 Email = "john.doe",
                 Password = "pass",
             };
         }
 
-        private static ResetPasswordValidator CreateResetPasswordPayload(
+        private static ResetPasswordRequest CreateResetPasswordPayload(
             string password = DEFAULT_PASSWORD + "Secure",
             string passwordConfirmation = DEFAULT_PASSWORD + "Secure")
         {
-            return new ResetPasswordValidator
+            return new ResetPasswordRequest
             {
                 Password = password,
                 PasswordConfirmation = passwordConfirmation

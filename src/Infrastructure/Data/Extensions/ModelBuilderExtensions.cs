@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Journeys;
+using Domain.Users;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;

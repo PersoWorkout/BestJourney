@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using Domain.DTOs.Responses;
-using Domain.DTOs.Validators.Journeys;
-using Domain.Models;
+using Domain.Journeys;
+using Domain.Journeys.Validators;
 
 namespace Application.Mappers
 {
