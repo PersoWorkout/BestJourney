@@ -9,13 +9,10 @@ namespace Infrastructure.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Journey> Journeys { get; set; }
-        public DbSet<UserJourney> UsersJourneys{ get; set; }
+        public DbSet<Order> Orders{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserJourney>()
-                .HasKey(e => new { e.UserId, e.JourneyId });
-
             modelBuilder.Seed();
         }
     }

@@ -1,3 +1,4 @@
+using API.Presenter.Orders;
 using Application.DependencyInjection;
 using Infrastructure.Data;
 using Infrastructure.DependencyInjection;
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddInfrastructureServices(builder.Configuration)
     .AddApplicationServices();
+
+builder.Services.AddScoped<CreateOrderPresenter>();
 
 builder.Services.AddControllers();
 

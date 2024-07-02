@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Auth;
 using Application.Interfaces.Journeys;
+using Application.Interfaces.Orders;
 using Application.Interfaces.Users;
 using Application.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace Application.DependencyInjection
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJourneyService, JourneyService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             return services;
         }

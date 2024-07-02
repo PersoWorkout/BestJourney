@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces;
 using Domain.Utils;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Domain.Models
 {
@@ -22,7 +23,8 @@ namespace Domain.Models
         public bool IsActive { get; set; } = isActive;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
-        public List<UserJourney> UsersJourneys { get; set; } = [];
+        [JsonIgnore]
+        public List<Order> Orders { get; set; } = [];
 
         public void Update(
             string name, 

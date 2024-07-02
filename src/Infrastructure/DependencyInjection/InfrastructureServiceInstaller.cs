@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Auth;
 using Application.Interfaces.Journeys;
+using Application.Interfaces.Orders;
 using Application.Interfaces.Users;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -20,20 +21,18 @@ namespace Infrastructure.DependencyInjection
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             var dbConnectionString = configuration
-                .GetConnectionString("DefaultConnectionString");
+                .GetConnectionString("SqliteConnectionString");
             services.AddDbContext<BestJourneyDbContext>(options =>
-                options.UseNpgsql(dbConnectionString));
+                options.UseSqlite(dbConnectionString));
 
             var redisConnectionString = configuration
                 .GetConnectionString("RedisConnectionString");
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = redisConnectionString ;
-            });
+            services.AddDistributedMemoryCache();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IJourneyRepository, JourneyRepository>();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddScoped<IHashService, HashService>();
             services.AddScoped<ITokenService, TokenService>();
