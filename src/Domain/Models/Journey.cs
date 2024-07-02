@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces;
-using Domain.Utils;
+﻿using Domain.Utils;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -11,7 +10,7 @@ namespace Domain.Models
         string country,
         string city,
         decimal price,
-        bool isActive = true): IJourney
+        bool isActive = true)
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();

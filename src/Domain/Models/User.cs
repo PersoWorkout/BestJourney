@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces;
-using Domain.Utils;
+﻿using Domain.Utils;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -9,7 +8,7 @@ namespace Domain.Models
         string firstname,
         string lastname, 
         string email, 
-        string password) : IUser
+        string password)
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
