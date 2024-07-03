@@ -17,19 +17,28 @@ public class OrderRepository(BestJourneyDbContext dbContext) : IOrderRepository
         return data.Entity;
     }
 
-    public Task Delete(Order order)
+    public async Task Delete(Order order)
     {
-        throw new NotImplementedException();
+        _dbContext.Remove(order);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task<Order> GetById(Guid id)
+    public async Task<Order?> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Orders
+            .Where(o => o.Id == id)
+            .Include(o => o.Journey)
+            .Include(o => o.User)
+            .FirstOrDefaultAsync();
     }
 
-    public Task<IEnumerable<Order>> GetByJourney(Guid id)
+    public async Task<IEnumerable<Order>> GetByJourney(Guid id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Orders
+            .Where(o => o.JourneyId == id)
+            .Include(o => o.Journey)
+            .Include(o => o.User)
+            .ToListAsync();
     }
 
     public async Task<IEnumerable<Order>> GetByUserId(Guid id)
@@ -37,11 +46,15 @@ public class OrderRepository(BestJourneyDbContext dbContext) : IOrderRepository
         return await _dbContext.Orders
             .Where(o => o.UserId == id)
             .Include(o => o.Journey)
+            .Include(o => o.User)
             .ToListAsync();
     }
 
-    public Task<Order> Update(Order order)
+    public async Task<Order> Update(Order order)
     {
-        throw new NotImplementedException();
+        var entity = _dbContext.Orders.Update(order).Entity;
+        await _dbContext.SaveChangesAsync();
+
+        return entity;
     }
 }

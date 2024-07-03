@@ -3,7 +3,9 @@ using API.Journeys.GetJourneyById;
 using API.Journeys.GetJourneys;
 using API.Journeys.UpdateJourney;
 using API.Orders.CreateOrder;
+using API.Orders.GetOrderById;
 using API.Orders.GetOrderByUser;
+using API.Orders.UpdateOrder;
 
 namespace API.DependencyInjection;
 
@@ -13,13 +15,16 @@ public static class ApiServiceInstaller
     {
         services
             .AddScoped<CreateOrderPresenter>()
-            .AddScoped<GetOrdersByUserPresenter>();
+            .AddScoped<GetOrdersByUserPresenter>()
+            .AddScoped<GetOrderByIdPresenter>()
+            .AddScoped<UpdateOrderPresenter>();
 
         services.
             AddScoped<CreateJourneyPresenter>()
             .AddScoped<GetJourneyByIdPresenter>()
             .AddScoped<GetJourneysPresenter>()
             .AddScoped<UpdateJourneyPresenter>();
+
 
         return services;
     }

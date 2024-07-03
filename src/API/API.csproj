@@ -21,9 +21,4 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Orders\GetOrdersById\" />
-    <Folder Include="Orders\UpdateOrder\" />
-  </ItemGroup>
-
 </Project>

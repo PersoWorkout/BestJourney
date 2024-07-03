@@ -68,23 +68,72 @@ public class OrderService(
         return Result<Order>.Success(result);
     }
 
-    public Task<Result<object>> Delete(string orderId, string userId)
+    public async Task<Result<object>> Delete(string orderId, string userId)
     {
-        throw new NotImplementedException();
+        if (!Guid.TryParse(userId, out var parsedUserId))
+            return Result<object>.Failure(OrderError.NotFound(orderId));
+
+        if (!Guid.TryParse(orderId, out var parsedOrderId))
+            return Result<object>.Failure(OrderError.NotFound(orderId));
+
+        var order = await _repository.GetById(parsedOrderId);
+        if (order is null)
+            return Result<object>.Failure(OrderError.NotFound(orderId));
+
+        if(order.UserId != parsedUserId)
+            return Result<object>.Failure(OrderError.NotFound(orderId));
+
+        await _repository.Delete(order);
+
+        return Result<object>.Success();
     }
 
-    public Task<Result<Order>> GetById(string orderId, string userId)
+    public async Task<Result<Order>> GetById(string orderId)
     {
-        throw new NotImplementedException();
+        if(!Guid.TryParse(orderId, out var parsedOrderId))
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        var order = await _repository.GetById(parsedOrderId);
+        if(order is null)
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        return Result<Order>.Success(order);
     }
 
-    public Task<Result<IEnumerable<Order>>> GetByJourney(string journeyId)
+    public async Task<Result<IEnumerable<Order>>> GetByJourney(string journeyId)
     {
-        throw new NotImplementedException();
+        if(!Guid.TryParse(journeyId, out var parsedJourneyId))
+            return Result<IEnumerable<Order>>.Failure(
+                JourneyError.NotFound(journeyId));
+
+        var journey = await _journeyReposirtory.GetById(parsedJourneyId);
+        if(journey is null)
+            return Result<IEnumerable<Order>>.Failure(
+                JourneyError.NotFound(journeyId));
+
+        var orders = await _repository.GetByJourney(parsedJourneyId);
+        return Result<IEnumerable<Order>>.Success(orders);
     }
 
-    public Task<Result<Order>> Update(string orderId, string userId, UpdateOrderRequest payload)
+    public async Task<Result<Order>> Update(string orderId, string userId, UpdateOrderRequest payload)
     {
-        throw new NotImplementedException();
+        if (!Guid.TryParse(userId, out var parsedUserId))
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        if (!Guid.TryParse(orderId, out var parsedOrderId))
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        var order = await _repository.GetById(parsedOrderId);
+        if (order is null)
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        if (order.UserId != parsedUserId)
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        order.Update(payload.ParticipantCount);
+
+        var result = await _repository.Update(order);
+
+        return Result<Order>.Success(result);
     }
 }
