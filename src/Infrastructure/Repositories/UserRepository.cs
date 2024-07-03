@@ -9,10 +9,21 @@ public class UserRepository(BestJourneyDbContext dbContext) : IUserRepository
 {
     private readonly BestJourneyDbContext _dbContext = dbContext;
 
-    public async Task<IEnumerable<User>> GetUsers()
+    public async Task<IEnumerable<User>> GetCustomers()
     {
-        return await _dbContext.Users.ToListAsync();
+        return await _dbContext.Users
+            .Where(x => x.Role == UserRole.Customer)
+            .ToListAsync();
     }
+
+    public async Task<IEnumerable<User>> GetSuppliers()
+    {
+        return await _dbContext.Users
+            .Where(x => x.Role == UserRole.Supplier)
+            .ToListAsync();
+    }
+
+
     public async Task<User> Create(User user)
     {
         var result =await _dbContext.Users.AddAsync(user);
@@ -21,29 +32,44 @@ public class UserRepository(BestJourneyDbContext dbContext) : IUserRepository
         return result.Entity;
     }
 
-    public async Task Delete(User user)
+    public async Task<User?> GetCustomerById(Guid id)
     {
-        _dbContext.Users.Remove(user);
-        await _dbContext.SaveChangesAsync();
+        return await _dbContext.Users
+            .Where(x => x.Id == id && x.Role == UserRole.Customer)
+            .FirstOrDefaultAsync();
     }
 
-    public async Task<User?> GetByEmail(string email)
+    public async Task<User?> GetSupplierById(Guid id)
     {
-        return await _dbContext
-            .Users
-            .FirstOrDefaultAsync(user => user.Email == email);
+        return await _dbContext.Users
+            .Where(x => x.Id == id && x.Role == UserRole.Supplier)
+            .FirstOrDefaultAsync();
     }
 
-    public async Task<User?> GetById(Guid id)
+    public async Task<User?> GetCustomerByEmail(string email)
     {
-        return await _dbContext
-            .Users
-            .FirstOrDefaultAsync(user => user.Id == id);
+        return await _dbContext.Users
+            .Where(x => x.Email == email && x.Role == UserRole.Customer)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<User?> GetSupplierByEmail(string email)
+    {
+        return await _dbContext.Users
+            .Where(x => x.Email == email && x.Role == UserRole.Supplier)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<User?> Update(User user)
     {
+        _dbContext.Users.Update(user);
         await _dbContext.SaveChangesAsync();
         return user;
+    }
+
+    public async Task Delete(User user)
+    {
+        _dbContext.Users.Remove(user);
+        await _dbContext.SaveChangesAsync();
     }
 }
