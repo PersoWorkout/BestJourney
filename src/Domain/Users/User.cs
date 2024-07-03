@@ -57,7 +57,7 @@ public class User
         CreatedAt = DateTime.Now;
     }
 
-    public void Update(
+    public void UpdateCustomer(
         string firstname = "", 
         string lastname = "", 
         string email = "", 
@@ -77,7 +77,7 @@ public class User
         UpdatedAt = DateTime.Now;
     }
 
-    public void Update(
+    public void UpdateSupplier(
         string firstname = "",
         string lastname = "",
         string email = "",
