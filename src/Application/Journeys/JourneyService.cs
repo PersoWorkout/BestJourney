@@ -12,55 +12,52 @@ public class JourneyService(
     private readonly IJourneyRepository _journeyRepository = journeyRepository;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<IEnumerable<JourneyResponse>>> GetJourneys()
+    public async Task<Result<IEnumerable<Journey>>> GetJourneys()
     {
         var journeys = await _journeyRepository.GetJourneys();
 
-        return Result<IEnumerable<JourneyResponse>>
-            .Success(journeys.Select(journey => _mapper.Map<JourneyResponse>(journey)).ToList());
+        return Result<IEnumerable<Journey>>.Success(journeys);
     }
 
-    public async Task<Result<JourneyResponse>> Create(CreateJourneyRequest payload)
+    public async Task<Result<Journey>> Create(CreateJourneyRequest payload)
     {
         if (!payload.Validate())
-            return Result<JourneyResponse>
+            return Result<Journey>
                 .Failure(JourneyError.InvalidPayload);
 
         var journey = _mapper.Map<Journey>(payload);
 
         await _journeyRepository.Create(journey);
 
-        return Result<JourneyResponse>
-            .Success(_mapper.Map<JourneyResponse>(journey));
+        return Result<Journey>.Success(journey);
     }
-    public async Task<Result<JourneyResponse>> GetById(string id)
+    public async Task<Result<Journey>> GetById(string id)
     {
         if (!Guid.TryParse(id, out var journeyId))
-            return Result<JourneyResponse>
+            return Result<Journey>
                 .Failure(JourneyError.NotFound(id));
 
         var journey = await _journeyRepository.GetById(journeyId);
         if (journey == null)
-            return Result<JourneyResponse>
+            return Result<Journey>
                 .Failure(JourneyError.NotFound(id));
 
-        return Result<JourneyResponse>.Success(
-            _mapper.Map<JourneyResponse>(journey));
+        return Result<Journey>.Success(journey);
     }
 
-    public async Task<Result<JourneyResponse>> Update(string id, UpdateJourneyRequest payload)
+    public async Task<Result<Journey>> Update(string id, UpdateJourneyRequest payload)
     {
         if (!payload.Validate())
-            return Result<JourneyResponse>
+            return Result<Journey>
                 .Failure(JourneyError.InvalidPayload);
 
         if (!Guid.TryParse(id, out var journeyId))
-            return Result<JourneyResponse>
+            return Result<Journey>
                 .Failure(JourneyError.NotFound(id));
 
         var journey = await _journeyRepository.GetById(journeyId);
         if (journey is null)
-            return Result<JourneyResponse>
+            return Result<Journey>
                 .Failure(JourneyError.NotFound(id));
 
         journey.Update(
@@ -73,24 +70,23 @@ public class JourneyService(
 
         await _journeyRepository.SaveChanges(journey);
 
-        return Result<JourneyResponse>.Success(
-            _mapper.Map<JourneyResponse>(journey));
+        return Result<Journey>.Success(journey);
 
     }
 
-    public async Task<Result<JourneyResponse>> Delete(string id)
+    public async Task<Result<object>> Delete(string id)
     {
         if (!Guid.TryParse(id, out var journeyId))
-            return Result<JourneyResponse>
+            return Result<object>
                 .Failure(JourneyError.NotFound(id));
 
         var journey = await _journeyRepository.GetById(journeyId);
         if (journey is null)
-            return Result<JourneyResponse>
+            return Result<object>
                 .Failure(JourneyError.NotFound(id));
 
         await _journeyRepository.Delete(journey);
 
-        return Result<JourneyResponse>.Success();
+        return Result<object>.Success();
     }
 }

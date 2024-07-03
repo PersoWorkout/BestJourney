@@ -6,9 +6,9 @@ namespace Application.Journeys;
 
 public interface IJourneyService
 {
-    Task<Result<IEnumerable<JourneyResponse>>> GetJourneys();
-    Task<Result<JourneyResponse>> Create(CreateJourneyRequest payload);
-    Task<Result<JourneyResponse>> GetById(string id);
-    Task<Result<JourneyResponse>> Update(string id, UpdateJourneyRequest payload);
-    Task<Result<JourneyResponse>> Delete(string id);
+    Task<Result<IEnumerable<Journey>>> GetJourneys();
+    Task<Result<Journey>> Create(CreateJourneyRequest payload);
+    Task<Result<Journey>> GetById(string id);
+    Task<Result<Journey>> Update(string id, UpdateJourneyRequest payload);
+    Task<Result<object>> Delete(string id);
 }
