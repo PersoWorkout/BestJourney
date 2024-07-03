@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 src/API/mydb.db
+src/API/mydb.db-shm
+src/API/mydb.db-wal
