@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(BestJourneyDbContext))]
-    partial class BestJourneyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240704113051_AddFK_User_Journeys")]
+    partial class AddFK_User_Journeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -59,32 +62,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("Journeys");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d543e25e-6341-4fa9-834f-36b6d2f1ea7f"),
-                            City = "Istanbul",
-                            Country = "Turkey",
-                            CreatedAt = new DateTime(2024, 7, 4, 15, 42, 38, 574, DateTimeKind.Local).AddTicks(4732),
-                            CreatorId = new Guid("88d43f6f-309d-4c8a-a95a-7ba3ec8f92da"),
-                            Description = "Welcome to Istanbul! Visit and discover the history of the most beautiful city in the world",
-                            IsActive = true,
-                            Name = "Discover Istanbul",
-                            Price = 650m
-                        },
-                        new
-                        {
-                            Id = new Guid("bbe9ad9a-d9dd-4025-9a2d-6c383e705364"),
-                            City = "Alanya",
-                            Country = "Turkey",
-                            CreatedAt = new DateTime(2024, 7, 4, 15, 42, 38, 574, DateTimeKind.Local).AddTicks(4785),
-                            CreatorId = new Guid("88d43f6f-309d-4c8a-a95a-7ba3ec8f92da"),
-                            Description = "Welcome to Alanya! Visit and discover the different parts of this beatiful country from the beach to the forest without forgetting the ancient ruins.",
-                            IsActive = true,
-                            Name = "Travel to Alanya",
-                            Price = 400m
-                        });
                 });
 
             modelBuilder.Entity("Domain.Orders.Order", b =>
@@ -177,28 +154,14 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b9217759-7274-477b-8772-284803c86a34"),
-                            CreatedAt = new DateTime(2024, 7, 4, 15, 42, 38, 574, DateTimeKind.Local).AddTicks(2692),
-                            Email = "customer@example.com",
-                            Firstname = "Tom",
-                            Lastname = "Doe",
-                            Password = "$2a$11$iSHHD/NUGOUdtgEOrcOyQu4TmMzfGVpXoRsLvtF0DMSVA5shlRvTu",
-                            Phone = "0601010101",
+                            Id = new Guid("b1d75552-cba7-4057-b689-ba46ce6a2064"),
+                            CreatedAt = new DateTime(2024, 7, 4, 13, 30, 49, 419, DateTimeKind.Local).AddTicks(6393),
+                            Email = "yasin.karakus@example.com",
+                            Firstname = "Yasin",
+                            Lastname = "Karakus",
+                            Password = "$2a$11$1RBCh9ZEiW5EsihXcYSoNeWxblafJrEyuWNkor8.htJOMlW/wPvNe",
+                            Phone = "0606060606",
                             Role = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("88d43f6f-309d-4c8a-a95a-7ba3ec8f92da"),
-                            CompanyName = "Trivago",
-                            CreatedAt = new DateTime(2024, 7, 4, 15, 42, 38, 574, DateTimeKind.Local).AddTicks(2806),
-                            Email = "supplier@example.com",
-                            Firstname = "John",
-                            Lastname = "Doe",
-                            Password = "$2a$11$iSHHD/NUGOUdtgEOrcOyQu4TmMzfGVpXoRsLvtF0DMSVA5shlRvTu",
-                            Phone = "0602020202",
-                            Role = 1,
-                            WebsiteName = "Trivago.fr",
-                            WebsiteUrl = "https://www.trivago.fr"
                         });
                 });
 

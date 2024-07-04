@@ -15,7 +15,9 @@ public class DeleteJourneyController(IJourneyService service) : Controller
     [HttpDelete("{id}")]
     public async Task<IResult> Delete(string id)
     {
-        var result = await _service.Delete(id);
+        var result = await _service.Delete(
+            id,
+            HttpContext.Items["userId"]!.ToString()!);
 
         return result.IsSucess ?
             Results.NoContent() :

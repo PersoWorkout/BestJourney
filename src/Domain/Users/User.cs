@@ -1,4 +1,5 @@
-﻿using Domain.Orders;
+﻿using Domain.Journeys;
+using Domain.Orders;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -21,7 +22,9 @@ public class User
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     [JsonIgnore]
-    public List<Order> Orders { get; set; } = [];
+    public List<Order>? Orders { get; set; }
+    [JsonIgnore]
+    public List<Journey>? Journeys { get; set; }
 
     public User()
     {

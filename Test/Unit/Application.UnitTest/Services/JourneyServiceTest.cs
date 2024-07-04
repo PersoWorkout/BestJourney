@@ -1,5 +1,7 @@
 ﻿using Application.Journeys;
+using Application.Journeys.Validators;
 using Application.UnitTest.Fakers.Journeys;
+using Application.UnitTest.Fakers.Users;
 using Domain.Journeys;
 using Domain.Journeys.Requests;
 
@@ -21,7 +23,11 @@ namespace Application.UnitTest.Services
             _fakeJourneyRepository = new FakeJourneyRepository();
             var mapper = FakeJourneyMapper.Create();
 
-            _journeyService = new JourneyService(_fakeJourneyRepository, mapper);
+            _journeyService = new JourneyService(
+                _fakeJourneyRepository, 
+                new FakeUserRepository(), 
+                new CreateJourneyRequestValidator(), 
+                mapper);
         }
 
         [Fact]
@@ -43,7 +49,7 @@ namespace Application.UnitTest.Services
             var payload = CreatePayloadToAdd();
 
             //Act
-            var result = await _journeyService.Create(payload);
+            var result = await _journeyService.Create(Guid.NewGuid().ToString(), payload);
 
             //Assert
             Assert.True(result.IsSucess);
@@ -57,7 +63,7 @@ namespace Application.UnitTest.Services
             var payload = new CreateJourneyRequest();
 
             //Act
-            var result = await _journeyService.Create(payload);
+            var result = await _journeyService.Create(Guid.NewGuid().ToString(), payload);
 
             //Assert
             Assert.True(result.IsFailure);
@@ -100,7 +106,7 @@ namespace Application.UnitTest.Services
             var payload = CreatePayloadToUpdate(price: newPrice);
 
             //Act
-            var result = await _journeyService.Update(journey.Id.ToString(), payload);
+            var result = await _journeyService.Update(journey.Id.ToString(), Guid.NewGuid().ToString(), payload);
 
             //Assert
             Assert.True(result.IsSucess);
@@ -114,7 +120,7 @@ namespace Application.UnitTest.Services
             var payload = CreatePayloadToUpdate();
 
             //Act
-            var result = await _journeyService.Update(new Guid().ToString(), payload);
+            var result = await _journeyService.Update(new Guid().ToString(), Guid.NewGuid().ToString(), payload);
 
             //Assert
             Assert.True(result.IsFailure);
@@ -129,7 +135,7 @@ namespace Application.UnitTest.Services
             var payload = CreatePayloadToUpdate(name: "Travel in Istanbul");
 
             //Act
-            var result = await _journeyService.Update(id, payload);
+            var result = await _journeyService.Update(id, Guid.NewGuid().ToString(), payload);
 
             //Assert
             Assert.True(result.IsFailure);
@@ -144,7 +150,7 @@ namespace Application.UnitTest.Services
             var payload = CreatePayloadToUpdate(name: "Travel in Istanbul");
 
             //Act
-            var result = await _journeyService.Update(id.ToString(), payload);
+            var result = await _journeyService.Update(id.ToString(), Guid.NewGuid().ToString(), payload);
 
             //Assert
             Assert.True(result.IsFailure);
@@ -158,7 +164,7 @@ namespace Application.UnitTest.Services
             var journey = await CreateJourney();
 
             //Act
-            var result = await _journeyService.Delete(journey.Id.ToString());
+            var result = await _journeyService.Delete(journey.Id.ToString(), Guid.NewGuid().ToString());
 
             //Assert
             Assert.True(result.IsSucess);
@@ -171,7 +177,7 @@ namespace Application.UnitTest.Services
             var journeyId = "InvalidId";
 
             //Act
-            var result = await _journeyService.Delete(journeyId.ToString());
+            var result = await _journeyService.Delete(journeyId.ToString(), Guid.NewGuid().ToString());
 
             //Assert
             Assert.True(result.IsFailure);
@@ -185,7 +191,7 @@ namespace Application.UnitTest.Services
             var journeyId = new Guid();
 
             //Act
-            var result = await _journeyService.Delete(journeyId.ToString());
+            var result = await _journeyService.Delete(journeyId.ToString(), Guid.NewGuid().ToString());
 
             //Assert
             Assert.True(result.IsFailure);
@@ -199,7 +205,8 @@ namespace Application.UnitTest.Services
                 DESCRIPTION, 
                 CITY, 
                 COUNTRY, 
-                PRICE);
+                PRICE,
+                Guid.NewGuid());
 
             await _fakeJourneyRepository.Create(journey);
 

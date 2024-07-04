@@ -95,5 +95,10 @@ namespace Application.UnitTest.Fakers.Users
         {
             throw new NotImplementedException();
         }
+
+        public Task<UserRole> GetRole(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

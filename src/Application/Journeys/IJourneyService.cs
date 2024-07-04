@@ -7,8 +7,8 @@ namespace Application.Journeys;
 public interface IJourneyService
 {
     Task<Result<IEnumerable<Journey>>> GetJourneys();
-    Task<Result<Journey>> Create(CreateJourneyRequest payload);
+    Task<Result<Journey>> Create(string userId, CreateJourneyRequest payload);
     Task<Result<Journey>> GetById(string id);
-    Task<Result<Journey>> Update(string id, UpdateJourneyRequest payload);
-    Task<Result<object>> Delete(string id);
+    Task<Result<Journey>> Update(string id, string userId, UpdateJourneyRequest payload);
+    Task<Result<object>> Delete(string id, string userId);
 }

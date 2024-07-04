@@ -74,7 +74,8 @@ namespace Domain.UnitTest.Models
                 DESCRIPTION,
                 COUNTRY,
                 CITY,
-                PRICE) ;
+                PRICE,
+                Guid.NewGuid());
         }
 
         private static Journey InstanceNewNonActiveJourney()
@@ -85,6 +86,7 @@ namespace Domain.UnitTest.Models
                 COUNTRY,
                 CITY,
                 PRICE,
+                Guid.NewGuid(),
                 false);
         }
 

@@ -19,7 +19,10 @@ public class UpdtaeJourneyController(
     [HttpPut("{id}")]
     public async Task<IResult> Handle(string id, [FromBody] UpdateJourneyRequest payload)
     {
-        var result = await _service.Update(id, payload);
+        var result = await _service.Update(
+            id,
+            HttpContext.Items["userId"]!.ToString()!, 
+            payload);
 
         return result.IsSucess ?
             Results.Ok(_presenter.ToJson(result.Data)) :

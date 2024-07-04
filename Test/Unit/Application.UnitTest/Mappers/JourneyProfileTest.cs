@@ -36,7 +36,8 @@ namespace Application.UnitTest.Mappers
                 DESCRIPTION,
                 COUNTRY,
                 CITY,
-                PRICE);
+                PRICE,
+                Guid.NewGuid());
 
             //Act
             var result = _mapper.Map<JourneyResponse>(journey);

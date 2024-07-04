@@ -19,7 +19,9 @@ public class CreateJourneyController(
     [HttpPost]
     public async Task<IResult> Handle([FromBody] CreateJourneyRequest payload)
     {
-        var result = await _service.Create(payload);
+        var result = await _service.Create(
+            HttpContext.Items["userId"]!.ToString()!,
+            payload);
 
         return result.IsSucess ?
             Results.Ok(_presenter.ToJson(result.Data)) :

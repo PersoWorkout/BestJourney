@@ -45,7 +45,8 @@ namespace Infrastructure.Integrationtest.Repositories
                 DESCRIPTION,
                 COUNTRY,
                 CITY,
-                PRICE);
+                PRICE,
+                Guid.NewGuid());
 
             //Act
             await _journeyRepository.Create(journey);
@@ -116,7 +117,8 @@ namespace Infrastructure.Integrationtest.Repositories
                 DESCRIPTION,
                 COUNTRY, 
                 CITY, 
-                PRICE);
+                PRICE,
+                Guid.NewGuid());
 
             await _dbContext.Journeys.AddAsync(journey);
 

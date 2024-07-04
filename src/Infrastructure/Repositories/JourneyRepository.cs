@@ -23,7 +23,10 @@ public class JourneyRepository(
 
     public async Task<Journey?> GetById(Guid id)
     {
-        return await _dbContext.Journeys.FindAsync(id);
+        return await _dbContext.Journeys
+            .Where(x => x.Id == id)
+            .Include(x => x.Creator)
+            .FirstOrDefaultAsync();
     }
 
     public async Task SaveChanges(Journey journey)

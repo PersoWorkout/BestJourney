@@ -1,15 +1,22 @@
-﻿using AutoMapper;
+﻿using Application.Users;
+using AutoMapper;
 using Domain.Abstractions;
 using Domain.Journeys;
 using Domain.Journeys.Requests;
+using Domain.Users;
+using FluentValidation;
 
 namespace Application.Journeys;
 
 public class JourneyService(
     IJourneyRepository journeyRepository,
+    IUserRepository userRepository,
+    IValidator<CreateJourneyRequest> validator,
     IMapper mapper) : IJourneyService
 {
     private readonly IJourneyRepository _journeyRepository = journeyRepository;
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IValidator<CreateJourneyRequest> _validator = validator;
     private readonly IMapper _mapper = mapper;
 
     public async Task<Result<IEnumerable<Journey>>> GetJourneys()
@@ -19,13 +26,24 @@ public class JourneyService(
         return Result<IEnumerable<Journey>>.Success(journeys);
     }
 
-    public async Task<Result<Journey>> Create(CreateJourneyRequest payload)
+    public async Task<Result<Journey>> Create(string userId, CreateJourneyRequest payload)
     {
-        if (!payload.Validate())
+        var validation = _validator.Validate(payload);
+        if(!validation.IsValid)
             return Result<Journey>
                 .Failure(JourneyError.InvalidPayload);
 
+        if (!Guid.TryParse(userId, out var parsedUserId))
+            return Result<Journey>.Failure(
+                UserError.NotFound);
+
+        var user = await _userRepository.GetSupplierById(parsedUserId);
+        if (user is null)
+            return Result<Journey>.Failure(
+                UserError.NotFound);
+
         var journey = _mapper.Map<Journey>(payload);
+        journey.CreatorId = user.Id;
 
         await _journeyRepository.Create(journey);
 
@@ -45,11 +63,16 @@ public class JourneyService(
         return Result<Journey>.Success(journey);
     }
 
-    public async Task<Result<Journey>> Update(string id, UpdateJourneyRequest payload)
+    public async Task<Result<Journey>> Update(string id, string userId, UpdateJourneyRequest payload)
     {
-        if (!payload.Validate())
-            return Result<Journey>
-                .Failure(JourneyError.InvalidPayload);
+        if (!Guid.TryParse(userId, out var parsedUserId))
+            return Result<Journey>.Failure(
+                UserError.NotFound);
+
+        var user = await _userRepository.GetSupplierById(parsedUserId);
+        if (user is null)
+            return Result<Journey>.Failure(
+                UserError.NotFound);
 
         if (!Guid.TryParse(id, out var journeyId))
             return Result<Journey>
@@ -57,6 +80,10 @@ public class JourneyService(
 
         var journey = await _journeyRepository.GetById(journeyId);
         if (journey is null)
+            return Result<Journey>
+                .Failure(JourneyError.NotFound(id));
+
+        if(journey.CreatorId != user.Id)
             return Result<Journey>
                 .Failure(JourneyError.NotFound(id));
 
@@ -71,17 +98,29 @@ public class JourneyService(
         await _journeyRepository.SaveChanges(journey);
 
         return Result<Journey>.Success(journey);
-
     }
 
-    public async Task<Result<object>> Delete(string id)
+    public async Task<Result<object>> Delete(string id, string userId)
     {
+        if (!Guid.TryParse(userId, out var parsedUserId))
+            return Result<object>.Failure(
+                UserError.NotFound);
+
+        var user = await _userRepository.GetSupplierById(parsedUserId);
+        if (user is null)
+            return Result<object>.Failure(
+                UserError.NotFound);
+
         if (!Guid.TryParse(id, out var journeyId))
             return Result<object>
                 .Failure(JourneyError.NotFound(id));
 
         var journey = await _journeyRepository.GetById(journeyId);
         if (journey is null)
+            return Result<object>
+                .Failure(JourneyError.NotFound(id));
+
+        if (journey.CreatorId != user.Id)
             return Result<object>
                 .Failure(JourneyError.NotFound(id));
 

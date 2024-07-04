@@ -15,6 +15,16 @@ public class BestJourneyDbContext(DbContextOptions<BestJourneyDbContext> options
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .HasIndex(x => new { x.Email, x.Role })
+            .IsUnique();
+
+        modelBuilder.Entity<Journey>()
+            .HasOne(x => x.Creator)
+            .WithMany(x => x.Journeys)
+            .HasForeignKey(x => x.CreatorId);
+            
+
         modelBuilder.Seed();
     }
 }

@@ -1,30 +1,49 @@
 ﻿using Domain.Orders;
+using Domain.Users;
 using Domain.Utils;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Domain.Journeys;
 
-public class Journey(
-    string name,
-    string description,
-    string country,
-    string city,
-    decimal price,
-    bool isActive = true)
+public class Journey
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
-    public string Name { get; set; } = name;
-    public string Description { get; set; } = description;
-    public string Country { get; set; } = country;
-    public string City { get; set; } = city;
-    public decimal Price { get; set; } = price;
-    public bool IsActive { get; set; } = isActive;
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string Country { get; set; }
+    public string City { get; set; }
+    public decimal Price { get; set; }
+    public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime? UpdatedAt { get; set; }
+    public Guid CreatorId { get; set; }
     [JsonIgnore]
     public List<Order> Orders { get; set; } = [];
+    [JsonIgnore]
+    public User Creator { get; set; }
+
+    public Journey() { }
+
+    public Journey(
+        string name,
+        string description,
+        string country,
+        string city,
+        decimal price,
+        Guid creatorId,
+        bool isActive = true) 
+    {
+        Name = name;
+        Description = description;
+        Country = country; 
+        City = city;
+        Price = price;
+        IsActive = isActive;
+        CreatorId = CreatorId;
+    }
+
 
     public void Update(
         string name,

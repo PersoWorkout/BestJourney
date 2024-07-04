@@ -17,8 +17,15 @@ public class GetJourneyByIdPresenter
                 country = journey.Country,
                 city = journey.City,
                 isActive = journey.IsActive.ToString(),
-                createdAt = journey.CreatedAt.ToString("dd/MM/yyyy hh:mm"),
-                updatedAt = journey.UpdatedAt?.ToString("dd/MM/yyyy hh:mm"),
+                createdAt = journey.CreatedAt.ToString("dd/MM/yyyy HH:mm"),
+                updatedAt = journey.UpdatedAt?.ToString("dd/MM/yyyy HH:mm"),
+                creator = new
+                {
+                    id = journey.CreatorId.ToString(),
+                    name = $"{journey.Creator.Firstname} {journey.Creator.Lastname}",
+                    email = journey.Creator.Email,
+                    companyName = journey.Creator.CompanyName,
+                }
             }
         };
     }

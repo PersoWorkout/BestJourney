@@ -1,6 +1,4 @@
-﻿using Domain.Utils;
-
-namespace Domain.Journeys.Requests;
+﻿namespace Domain.Journeys.Requests;
 
 public class CreateJourneyRequest
 {
@@ -10,13 +8,4 @@ public class CreateJourneyRequest
     public string City { get; set; }
     public decimal Price { get; set; }
     public bool IsActive { get; set; } = false;
-
-    public bool Validate()
-    {
-        return Name.IsValid() &&
-            Description.IsValid() &&
-            Country.IsValid() &&
-            City.IsValid() &&
-            Price > 0m;
-    }
 }
