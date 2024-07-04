@@ -1,4 +1,4 @@
-﻿using Domain.Auth.Validators;
+﻿using Domain.Auth.Requests;
 
 namespace Domain.UnitTest.DTOs.Auth
 {
@@ -84,9 +84,9 @@ namespace Domain.UnitTest.DTOs.Auth
 
 
 
-        private static CreateUserValidator CreateValidPayload()
+        private static CreateUserRequest CreateValidPayload()
         {
-            return new CreateUserValidator
+            return new CreateUserRequest
             {
                 Firstname = "John",
                 Lastname = "Doe",
@@ -96,9 +96,9 @@ namespace Domain.UnitTest.DTOs.Auth
             };
         }
 
-        private static CreateUserValidator CreatePayloadWithInvalidFirstname()
+        private static CreateUserRequest CreatePayloadWithInvalidFirstname()
         {
-            return new CreateUserValidator
+            return new CreateUserRequest
             {
                 Firstname = "",
                 Lastname = "Doe",
@@ -108,9 +108,9 @@ namespace Domain.UnitTest.DTOs.Auth
             };
         }
 
-        private static CreateUserValidator CreatePayloadWithInvalidLastname()
+        private static CreateUserRequest CreatePayloadWithInvalidLastname()
         {
-            return new CreateUserValidator
+            return new CreateUserRequest
             {
                 Firstname = "John",
                 Lastname = "",
@@ -120,9 +120,9 @@ namespace Domain.UnitTest.DTOs.Auth
             };
         }
 
-        private static CreateUserValidator CreatePayloadWithInvalidEmail()
+        private static CreateUserRequest CreatePayloadWithInvalidEmail()
         {
-            return new CreateUserValidator
+            return new CreateUserRequest
             {
                 Firstname = "John",
                 Lastname = "Doe",
@@ -132,9 +132,9 @@ namespace Domain.UnitTest.DTOs.Auth
             };
         }
 
-        private static CreateUserValidator CreatePayloadWithInvalidPassword()
+        private static CreateUserRequest CreatePayloadWithInvalidPassword()
         {
-            return new CreateUserValidator
+            return new CreateUserRequest
             {
                 Firstname = "John",
                 Lastname = "Doe",
@@ -144,9 +144,9 @@ namespace Domain.UnitTest.DTOs.Auth
             };
         }
 
-        private static CreateUserValidator CreatePayloadWithoutPasswordValidation()
+        private static CreateUserRequest CreatePayloadWithoutPasswordValidation()
         {
-            return new CreateUserValidator
+            return new CreateUserRequest
             {
                 Firstname = "John",
                 Lastname = "Doe",

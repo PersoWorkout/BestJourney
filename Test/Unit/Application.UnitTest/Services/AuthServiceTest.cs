@@ -2,8 +2,8 @@
 using Application.UnitTest.Fakers.Auth;
 using Application.UnitTest.Fakers.Users;
 using AutoMapper;
-using Domain.Auth.Validators;
-using Domain.DTOs;
+using Domain.Auth;
+using Domain.Auth.Requests;
 using Domain.DTOs.Responses;
 using Domain.Users;
 
@@ -46,7 +46,7 @@ namespace Application.UnitTest.Services
             var payload = CreateValidCreationPayload();
 
             //Act
-            var result = await _authService.Register(payload);
+            var result = await _authService.RegisterCustomer(payload);
 
             //Assert
             Assert.True(result.IsSucess);
@@ -59,7 +59,7 @@ namespace Application.UnitTest.Services
             var payload = CreateValidCreationPayload();
 
             //Act
-            var result = await _authService.Register(payload);
+            var result = await _authService.RegisterCustomer(payload);
 
             //Assert
             Assert.IsType<AuthenticatedResponse>(result.Data);
@@ -72,7 +72,7 @@ namespace Application.UnitTest.Services
             var payload = CreateInvalidCreationPayload();
 
             //Act
-            var result = await _authService.Register(payload);
+            var result = await _authService.RegisterCustomer(payload);
 
             //Assert
             Assert.True(result.IsFailure);
@@ -87,7 +87,7 @@ namespace Application.UnitTest.Services
             var secondPayload = CreateValidCreationPayload();
 
             //Act
-            var result = await _authService.Register(secondPayload);
+            var result = await _authService.RegisterCustomer(secondPayload);
 
             //Assert
             Assert.True(result.IsFailure);
@@ -102,7 +102,7 @@ namespace Application.UnitTest.Services
             var payload = CreateValidLoginPayload();
 
             //Act
-            var result = await _authService.Login(payload);
+            var result = await _authService.LoginCustomer(payload);
 
             //Assert
             Assert.True(result.IsSucess);
@@ -116,7 +116,7 @@ namespace Application.UnitTest.Services
             var payload = CreateValidLoginPayload();
 
             //Act
-            var result = await _authService.Login(payload);
+            var result = await _authService.LoginCustomer(payload);
 
             //Assert
             Assert.IsType<AuthenticatedResponse>(result.Data);
@@ -129,7 +129,7 @@ namespace Application.UnitTest.Services
             var payload = CreateInvalidLoginPayload();
 
             //Act
-            var result = await _authService.Login(payload);
+            var result = await _authService.LoginCustomer(payload);
 
             //Assert
             Assert.Equal(UserError.InvalidPayload, result.Error);
@@ -144,7 +144,7 @@ namespace Application.UnitTest.Services
                 password: "Password123!");
 
             //Act
-            var result = await _authService.Login(payload);
+            var result = await _authService.LoginCustomer(payload);
 
             //Assert
             Assert.Equal(UserError.InvalidCredentials, result.Error);
@@ -158,7 +158,7 @@ namespace Application.UnitTest.Services
                 password: "Password123!");
 
             //Act
-            var result = await _authService.Login(payload);
+            var result = await _authService.LoginCustomer(payload);
 
             //Assert
             Assert.Equal(UserError.InvalidCredentials, result.Error);
@@ -284,13 +284,13 @@ namespace Application.UnitTest.Services
 
         }
 
-        private static CreateUserValidator CreateValidCreationPayload(
+        private static CreateUserRequest CreateValidCreationPayload(
             string firstname = DEFAULT_FIRSTNAME,
             string lastname = DEFAULT_LASTNAME,
             string email = DEFAULT_EMAIL,
             string password = DEFAULT_PASSWORD)
         {
-            return new CreateUserValidator
+            return new CreateUserRequest
             {
                 Firstname = firstname,
                 Lastname = lastname,
@@ -300,9 +300,9 @@ namespace Application.UnitTest.Services
             };
         }
 
-        private static CreateUserValidator CreateInvalidCreationPayload()
+        private static CreateUserRequest CreateInvalidCreationPayload()
         {
-            return new CreateUserValidator();
+            return new CreateUserRequest();
         }
 
         private static LoginUserRequest CreateValidLoginPayload(
@@ -346,7 +346,8 @@ namespace Application.UnitTest.Services
                 firstname,
                 lastname,
                 email,
-                password);
+                password,
+                "0606060606");
 
             await _userRepository.Create(user);
 

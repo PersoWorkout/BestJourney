@@ -1,4 +1,4 @@
-﻿using Domain.DTOs.Validators.Auth;
+﻿using Domain.Auth.Requests;
 
 namespace Domain.UnitTest.DTOs.Auth
 {
@@ -8,7 +8,7 @@ namespace Domain.UnitTest.DTOs.Auth
         public void Validate_ShouldBeTrue_WhenPayloadIsValid()
         {
             //Arrange
-            var payload = new ResetPasswordValidator
+            var payload = new ResetPasswordRequest
             {
                 Password = "Password132!",
                 PasswordConfirmation = "Password132!",
@@ -25,7 +25,7 @@ namespace Domain.UnitTest.DTOs.Auth
         public void Validate_ShouldBeFalse_WhenNotValidPassword()
         {
             //Arrange
-            var payload = new ResetPasswordValidator
+            var payload = new ResetPasswordRequest
             {
                 Password = "pass",
                 PasswordConfirmation = "pass",
@@ -42,7 +42,7 @@ namespace Domain.UnitTest.DTOs.Auth
         public void Validate_ShouldBeFalse_WhenConfirmationANdPasswordAreNotIdentic()
         {
             //Arrange
-            var payload = new ResetPasswordValidator
+            var payload = new ResetPasswordRequest
             {
                 Password = "Password132!",
                 PasswordConfirmation = "OtherPassword132!",

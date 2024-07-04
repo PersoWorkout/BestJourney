@@ -1,9 +1,4 @@
-﻿using Domain.Journeys.Validators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Journeys.Requests;
 
 namespace Domain.UnitTest.DTOs.Journeys
 {
@@ -115,9 +110,9 @@ namespace Domain.UnitTest.DTOs.Journeys
             Assert.False(result);
         }
 
-        private static CreateJourneyValidator CreateValidPayload(bool isActive)
+        private static CreateJourneyRequest CreateValidPayload(bool isActive)
         {
-            return new CreateJourneyValidator()
+            return new CreateJourneyRequest()
             {
                 Name = "Discover Istanbul",
                 Description = "Welcome to Istanbul! Visit and discover the history of the most beautiful city in the world",
@@ -128,19 +123,19 @@ namespace Domain.UnitTest.DTOs.Journeys
             };
         }
 
-        private static CreateJourneyValidator CreateEmptyPayload()
+        private static CreateJourneyRequest CreateEmptyPayload()
         {
             return new();
         }
 
-        private static CreateJourneyValidator CreateInvalidValidPayload(
+        private static CreateJourneyRequest CreateInvalidValidPayload(
             bool invalidName = false,
             bool invalidDescription = false,
             bool invalidCountry = false,
             bool invalidCity = false,
             bool invalidPrice = false)
         {
-            return new CreateJourneyValidator()
+            return new CreateJourneyRequest()
             {
                 Name = invalidName ? "" : "Discover Istanbul",
                 Description = invalidDescription ? "" : "Welcome to Istanbul! Visit and discover the history of the most beautiful city in the world",

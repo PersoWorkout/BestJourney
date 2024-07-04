@@ -1,4 +1,4 @@
-﻿using Application.Mappers;
+﻿using Application.Journeys;
 using AutoMapper;
 
 namespace Application.UnitTest.Fakers.Journeys

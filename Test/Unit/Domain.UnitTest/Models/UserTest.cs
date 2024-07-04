@@ -32,7 +32,7 @@ namespace Domain.UnitTest.Models
             string password = "Password123!";
 
             //Act
-            user.Update(newFirstname, newLastname, newEmail, password);
+            user.UpdateCustomer(newFirstname, newLastname, newEmail, password);
 
             //Assert
             Assert.True(ValidateUserUpdate(user, newFirstname, newLastname, newEmail));
@@ -45,7 +45,7 @@ namespace Domain.UnitTest.Models
             string email = EMAIL;
             string password = PASSWORD;
 
-            return new(firstname, lastname, email, password);
+            return new(firstname, lastname, email, password, "0606060606");
         }
 
         private static bool ValidateUserCreation(User user)

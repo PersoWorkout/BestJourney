@@ -30,9 +30,9 @@ namespace Domain.UnitTest.DTOs.Users
             Assert.False(result);
         }
 
-        private static UpdateUserValidator CreateValidPayload()
+        private static UpdateUserRequest CreateValidPayload()
         {
-            return new UpdateUserValidator
+            return new UpdateUserRequest
             {
                 Firstname = "John",
                 Lastname = "Doe",
@@ -40,9 +40,9 @@ namespace Domain.UnitTest.DTOs.Users
             };
         }
 
-        private static UpdateUserValidator CreateInvalidPayload()
+        private static UpdateUserRequest CreateInvalidPayload()
         {
-            return new UpdateUserValidator();
+            return new UpdateUserRequest();
         }
     }
 }

@@ -65,5 +65,35 @@ namespace Application.UnitTest.Fakers.Users
 
             return await Task.Run(() => user);
         }
+
+        public Task<IEnumerable<User>> GetCustomers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<User>> GetSuppliers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User?> GetCustomerById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User?> GetSupplierById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User?> GetCustomerByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User?> GetSupplierByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Auth;
+using Domain.Auth;
 using Domain.DTOs;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;

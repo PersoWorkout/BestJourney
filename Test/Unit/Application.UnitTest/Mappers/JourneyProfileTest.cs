@@ -1,8 +1,7 @@
-﻿using Application.Mappers;
+﻿using Application.Journeys;
 using AutoMapper;
-using Domain.DTOs.Validators.Journeys;
-using Domain.DTOs.Validators.Users;
 using Domain.Journeys;
+using Domain.Journeys.Requests;
 
 namespace Application.UnitTest.Mappers
 {
@@ -50,7 +49,7 @@ namespace Application.UnitTest.Mappers
         public void Map_ShouldReturnJourney_WhenParameterIsJourneyValidator()
         {
             //Arrange
-            var payload = new CreateJourneyValidator
+            var payload = new CreateJourneyRequest
             {
                 Name = NAME,
                 Description = DESCRIPTION,

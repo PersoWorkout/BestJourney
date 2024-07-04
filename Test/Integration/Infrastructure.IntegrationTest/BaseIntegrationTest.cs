@@ -1,5 +1,4 @@
-﻿using Application.Interfaces.Users;
-using Infrastructure.Data;
+﻿using Infrastructure.Data;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Integrationtest

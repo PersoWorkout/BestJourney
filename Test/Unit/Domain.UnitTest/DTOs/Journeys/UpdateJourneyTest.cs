@@ -1,9 +1,4 @@
-﻿using Domain.Journeys.Validators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Journeys.Requests;
 
 namespace Domain.UnitTest.DTOs.Journeys
 {
@@ -35,17 +30,17 @@ namespace Domain.UnitTest.DTOs.Journeys
             Assert.False(result);
         }
 
-        private static UpdateJourneyValidator CreateValidPayload(bool isActive)
+        private static UpdateJourneyRequest CreateValidPayload(bool isActive)
         {
-            return new UpdateJourneyValidator()
+            return new UpdateJourneyRequest()
             {
                 Price = 650m,
             };
         }
 
-        private static UpdateJourneyValidator CreateEmptyPayload()
+        private static UpdateJourneyRequest CreateEmptyPayload()
         {
-            return new UpdateJourneyValidator();
+            return new UpdateJourneyRequest();
         }
     }
 }

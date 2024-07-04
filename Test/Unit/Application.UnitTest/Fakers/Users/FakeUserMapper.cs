@@ -1,4 +1,4 @@
-﻿using Application.Mappers;
+﻿using Application.Users;
 using AutoMapper;
 
 namespace Application.UnitTest.Fakers.Users

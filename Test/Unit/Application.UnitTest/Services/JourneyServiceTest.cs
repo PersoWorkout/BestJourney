@@ -1,8 +1,7 @@
 ﻿using Application.Journeys;
-using Application.Services;
 using Application.UnitTest.Fakers.Journeys;
 using Domain.Journeys;
-using Domain.Journeys.Validators;
+using Domain.Journeys.Requests;
 
 namespace Application.UnitTest.Services
 {
@@ -55,7 +54,7 @@ namespace Application.UnitTest.Services
         public async void Create_ShouldBeFailure_WhenPayloadIsInvalid()
         {
             //Arrange
-            var payload = new CreateJourneyValidator();
+            var payload = new CreateJourneyRequest();
 
             //Act
             var result = await _journeyService.Create(payload);
@@ -207,9 +206,9 @@ namespace Application.UnitTest.Services
             return journey;
         }
 
-        private static CreateJourneyValidator CreatePayloadToAdd()
+        private static CreateJourneyRequest CreatePayloadToAdd()
         {
-            return new CreateJourneyValidator()
+            return new CreateJourneyRequest()
             {
                 Name = "Discover Istanbul",
                 Description = "Welcome to Istanbul! Visit and discover the history of the most beautiful city in the world",
@@ -220,14 +219,14 @@ namespace Application.UnitTest.Services
             };
         }
 
-        private static UpdateJourneyValidator CreatePayloadToUpdate(
+        private static UpdateJourneyRequest CreatePayloadToUpdate(
             string name = "",
             string description = "",
             string country = "",
             string city = "",
             decimal price = 0m)
         {
-            return new UpdateJourneyValidator()
+            return new UpdateJourneyRequest()
             {
                 Name = name,
                 Description = description,

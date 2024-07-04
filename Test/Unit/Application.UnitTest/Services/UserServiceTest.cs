@@ -1,6 +1,6 @@
-﻿using Application.Services;
-using Application.UnitTest.Fakers.Users;
+﻿using Application.UnitTest.Fakers.Users;
 using Application.Users;
+using Application.Users.Customers;
 using Domain.Users;
 using Domain.Users.Requests;
 
@@ -8,15 +8,14 @@ namespace Application.UnitTest.Services
 {
     public class UserServiceTest
     {
-        private readonly IUserService _userService;
+        private readonly ICustomerService _userService;
         private readonly IUserRepository _userRepository;
 
         public UserServiceTest() 
         {
             _userRepository = new FakeUserRepository();
-            var mapper = FakeUserMapper.Create();
 
-            _userService = new UserService(_userRepository, mapper);
+            _userService = new CustomerService(_userRepository);
         }
 
         private const string DEFAULT_FIRSTNAME = "John";
@@ -72,7 +71,7 @@ namespace Application.UnitTest.Services
             await InsertNewUser();
 
             //Act
-            var result = await _userService.GetUsers();
+            var result = await _userService.GetAll();
 
             //Assert
             Assert.True(result.IsSucess);
@@ -203,12 +202,12 @@ namespace Application.UnitTest.Services
             Assert.Equal(UserError.EmailAlreadyUsed, result.Error);
         }
 
-        private static UpdateUserValidator CreatePayloadToUpdate(
+        private static UpdateUserRequest CreatePayloadToUpdate(
             string firstname = "",
             string lastname = "",
             string email = "")
         {
-            return new UpdateUserValidator
+            return new UpdateUserRequest
             {
                 Firstname = firstname,
                 Lastname = lastname,
@@ -226,7 +225,8 @@ namespace Application.UnitTest.Services
                 firstname: firstname,
                 lastname: lastname,
                 email: email,
-                password: password);
+                password: password,
+                "0606060606");
 
             await _userRepository.Create(user);
 

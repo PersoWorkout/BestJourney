@@ -31,7 +31,7 @@ namespace Infrastructure.Integrationtest.Repositories
             await CreateUser();
 
             //Act
-            var result = await _userRepository.GetUsers();
+            var result = await _userRepository.GetCustomers();
 
             //Assert
             Assert.NotEmpty(result);
@@ -46,7 +46,8 @@ namespace Infrastructure.Integrationtest.Repositories
                 FIRSTNAME,
                 LASTNAME,
                 EMAIL,
-                PASSWORD);
+                PASSWORD,
+                "0606060606");
 
             //Act
             var user = await _userRepository.Create(userPaylaod);
@@ -97,7 +98,7 @@ namespace Infrastructure.Integrationtest.Repositories
             }
 
             //Act
-            var user = await _userRepository.GetByEmail(createdUser.Email);
+            var user = await _userRepository.GetCustomerByEmail(createdUser.Email);
             if(user == null)
             {
                 Assert.Fail("Error when fetch user by email");
@@ -122,7 +123,7 @@ namespace Infrastructure.Integrationtest.Repositories
             }
 
             //Act
-            var user = await _userRepository.GetById(createdUser.Id);
+            var user = await _userRepository.GetCustomerById(createdUser.Id);
 
             //Assert
             Assert.NotNull(user);
@@ -142,7 +143,7 @@ namespace Infrastructure.Integrationtest.Repositories
             }
 
             //Act
-            user.Update(
+            user.UpdateCustomer(
                 "Jane", 
                 string.Empty, 
                 "jane.doe@example.com", 
@@ -170,7 +171,8 @@ namespace Infrastructure.Integrationtest.Repositories
                 FIRSTNAME, 
                 LASTNAME, 
                 EMAIL, 
-                BCrypt.Net.BCrypt.HashPassword(PASSWORD));
+                BCrypt.Net.BCrypt.HashPassword(PASSWORD),
+                "0606060660");
 
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
