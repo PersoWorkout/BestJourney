@@ -1,6 +1,6 @@
 ﻿using Domain.Utils;
 
-namespace Domain.Auth.Requests;
+namespace Domain.Auth.Requests.Suppliers;
 
 public class RegisterSupplierRequest
 {

@@ -1,8 +1,8 @@
 ﻿using Domain.Utils;
 
-namespace Domain.Auth.Requests;
+namespace Domain.Auth.Requests.Customers;
 
-public class CreateUserRequest
+public class RegisterCustomerRequest
 {
     public string Firstname { get; set; }
     public string Lastname { get; set; }

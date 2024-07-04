@@ -12,7 +12,7 @@ public class LoginCustomerController(IAuthService service) : Controller
     private readonly IAuthService _authService = service;
 
     [HttpPost]
-    public async Task<IResult> Handle(LoginUserRequest payload)
+    public async Task<IResult> Handle(LoginRequest payload)
     {
         var result = await _authService.LoginCustomer(payload);
 

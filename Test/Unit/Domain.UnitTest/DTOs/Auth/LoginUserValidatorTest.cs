@@ -43,27 +43,27 @@ namespace Domain.UnitTest.DTOs.Auth
             Assert.False(result);
         }
 
-        private static LoginUserRequest CreateValidPayload()
+        private static LoginRequest CreateValidPayload()
         {
-            return new LoginUserRequest
+            return new LoginRequest
             {
                 Email = "john.doe@example.com",
                 Password = "Password123!"
             };
         }
 
-        private static LoginUserRequest CreatePayloadWithInvalidEmail()
+        private static LoginRequest CreatePayloadWithInvalidEmail()
         {
-            return new LoginUserRequest
+            return new LoginRequest
             {
                 Email = "johndoeexample.com",
                 Password = "Password123!"
             };
         }
 
-        private static LoginUserRequest CreatePayloadWithInvalidPassword()
+        private static LoginRequest CreatePayloadWithInvalidPassword()
         {
-            return new LoginUserRequest
+            return new LoginRequest
             {
                 Email = "john.doe@example.com",
                 Password = "pass"

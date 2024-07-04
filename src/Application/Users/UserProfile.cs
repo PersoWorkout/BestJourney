@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Auth.Requests;
+using Domain.Auth.Requests.Customers;
 using Domain.Users;
 
 namespace Application.Users;
@@ -8,7 +8,7 @@ public class UserProfile : Profile
 {
     public UserProfile()
     {
-        CreateMap<CreateUserRequest, User>();
+        CreateMap<RegisterCustomerRequest, User>();
         CreateMap<User, UserResponse>();
     }
 }

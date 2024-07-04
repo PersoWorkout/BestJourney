@@ -12,7 +12,7 @@ public class LoginSupplierController(IAuthService service): Controller
     private readonly IAuthService _service = service;
 
     [HttpPost]
-    public async Task<IResult> Handle(LoginUserRequest payload)
+    public async Task<IResult> Handle(LoginRequest payload)
     {
         var result = await _service.LoginSupplier(payload);
 

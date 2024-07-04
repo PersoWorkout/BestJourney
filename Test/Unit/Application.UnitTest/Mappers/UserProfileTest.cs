@@ -1,6 +1,7 @@
 ﻿using Application.Users;
 using AutoMapper;
 using Domain.Auth.Requests;
+using Domain.Auth.Requests.Customers;
 using Domain.Users;
 
 namespace Application.UnitTest.Mappers
@@ -43,7 +44,7 @@ namespace Application.UnitTest.Mappers
         public void Map_ShouldReturnUser_WhenParameterIsUserValidator()
         {
             //Arrange
-            var payload = new CreateUserRequest
+            var payload = new RegisterCustomerRequest
             {
                 Firstname = "John",
                 Lastname = "Doe",

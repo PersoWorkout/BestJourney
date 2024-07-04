@@ -1,6 +1,6 @@
 ﻿using API.Extensions;
 using Application.Auth;
-using Domain.Auth.Requests;
+using Domain.Auth.Requests.Customers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Auth.Customers;
@@ -12,7 +12,7 @@ public class RegisterController(IAuthService service) : Controller
     private readonly IAuthService _authService = service;
 
     [HttpPost]
-    public async Task<IResult> Handle(CreateUserRequest payload)
+    public async Task<IResult> Handle(RegisterCustomerRequest payload)
     {
         var result = await _authService.RegisterCustomer(payload);
 

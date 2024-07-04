@@ -3,6 +3,8 @@ using AutoMapper;
 using Domain.Abstractions;
 using Domain.Auth;
 using Domain.Auth.Requests;
+using Domain.Auth.Requests.Customers;
+using Domain.Auth.Requests.Suppliers;
 using Domain.DTOs.Responses;
 using Domain.Users;
 
@@ -47,7 +49,7 @@ public class AuthService(
             new AuthenticatedResponse(token));
     }
 
-    public async Task<Result<AuthenticatedResponse>> LoginSupplier(LoginUserRequest payload)
+    public async Task<Result<AuthenticatedResponse>> LoginSupplier(LoginRequest payload)
     {
         if (!payload.Validate())
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
@@ -69,7 +71,7 @@ public class AuthService(
             new AuthenticatedResponse(token));
     }
 
-    public async Task<Result<AuthenticatedResponse>> RegisterCustomer(CreateUserRequest payload)
+    public async Task<Result<AuthenticatedResponse>> RegisterCustomer(RegisterCustomerRequest payload)
     {
         if (!payload.Validate())
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
@@ -95,7 +97,7 @@ public class AuthService(
             new AuthenticatedResponse(token));
     }
 
-    public async Task<Result<AuthenticatedResponse>> LoginCustomer(LoginUserRequest payload)
+    public async Task<Result<AuthenticatedResponse>> LoginCustomer(LoginRequest payload)
     {
         if (!payload.Validate())
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);

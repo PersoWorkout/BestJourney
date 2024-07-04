@@ -4,6 +4,7 @@ using Application.UnitTest.Fakers.Users;
 using AutoMapper;
 using Domain.Auth;
 using Domain.Auth.Requests;
+using Domain.Auth.Requests.Customers;
 using Domain.DTOs.Responses;
 using Domain.Users;
 
@@ -284,13 +285,13 @@ namespace Application.UnitTest.Services
 
         }
 
-        private static CreateUserRequest CreateValidCreationPayload(
+        private static RegisterCustomerRequest CreateValidCreationPayload(
             string firstname = DEFAULT_FIRSTNAME,
             string lastname = DEFAULT_LASTNAME,
             string email = DEFAULT_EMAIL,
             string password = DEFAULT_PASSWORD)
         {
-            return new CreateUserRequest
+            return new RegisterCustomerRequest
             {
                 Firstname = firstname,
                 Lastname = lastname,
@@ -300,25 +301,25 @@ namespace Application.UnitTest.Services
             };
         }
 
-        private static CreateUserRequest CreateInvalidCreationPayload()
+        private static RegisterCustomerRequest CreateInvalidCreationPayload()
         {
-            return new CreateUserRequest();
+            return new RegisterCustomerRequest();
         }
 
-        private static LoginUserRequest CreateValidLoginPayload(
+        private static LoginRequest CreateValidLoginPayload(
             string email = DEFAULT_EMAIL,
             string password = DEFAULT_PASSWORD)
         {
-            return new LoginUserRequest
+            return new LoginRequest
             {
                 Email = email,
                 Password = password,
             };
         }
 
-        private static LoginUserRequest CreateInvalidLoginPayload()
+        private static LoginRequest CreateInvalidLoginPayload()
         {
-            return new LoginUserRequest
+            return new LoginRequest
             {
                 Email = "john.doe",
                 Password = "pass",

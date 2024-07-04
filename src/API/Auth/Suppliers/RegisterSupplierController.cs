@@ -1,6 +1,6 @@
 ﻿using API.Extensions;
 using Application.Auth;
-using Domain.Auth.Requests;
+using Domain.Auth.Requests.Suppliers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Auth.Suppliers;
