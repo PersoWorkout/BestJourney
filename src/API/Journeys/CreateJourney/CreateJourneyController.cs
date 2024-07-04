@@ -15,7 +15,7 @@ public class CreateJourneyController(
     private readonly IJourneyService _service = service;
     private readonly CreateJourneyPresenter _presenter = presenter;
 
-    [Authenticated]
+    [IsSupplier]
     [HttpPost]
     public async Task<IResult> Handle([FromBody] CreateJourneyRequest payload)
     {

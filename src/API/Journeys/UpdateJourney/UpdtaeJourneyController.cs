@@ -15,7 +15,7 @@ public class UpdtaeJourneyController(
     private readonly IJourneyService _service = service;
     private readonly UpdateJourneyPresenter _presenter = presenter;
 
-    [Authenticated]
+    [IsSupplier]
     [HttpPut("{id}")]
     public async Task<IResult> Handle(string id, [FromBody] UpdateJourneyRequest payload)
     {

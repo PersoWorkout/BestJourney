@@ -11,7 +11,7 @@ public class DeleteJourneyController(IJourneyService service) : Controller
 {
     private readonly IJourneyService _service = service;
 
-    [Authenticated]
+    [IsSupplier]
     [HttpDelete("{id}")]
     public async Task<IResult> Delete(string id)
     {

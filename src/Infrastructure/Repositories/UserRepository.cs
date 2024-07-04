@@ -60,6 +60,14 @@ public class UserRepository(BestJourneyDbContext dbContext) : IUserRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<UserRole> GetRole(Guid id)
+    {
+        return await _dbContext.Users
+            .Where(x => x.Id == id)
+            .Select(x => x.Role)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<User?> Update(User user)
     {
         _dbContext.Users.Update(user);

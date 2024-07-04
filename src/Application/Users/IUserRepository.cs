@@ -11,6 +11,7 @@ public interface IUserRepository
     Task<User?> GetSupplierById(Guid id);
     Task<User?> GetCustomerByEmail(string email);
     Task<User?> GetSupplierByEmail(string email);
+    Task<UserRole> GetRole(Guid id);
     Task<User?> Update(User user);
     Task Delete(User user);
 }
