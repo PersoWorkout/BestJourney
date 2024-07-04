@@ -7,6 +7,7 @@ using Domain.Auth.Requests.Customers;
 using Domain.Auth.Requests.Suppliers;
 using Domain.DTOs.Responses;
 using Domain.Users;
+using FluentValidation;
 
 namespace Application.Auth;
 
@@ -15,17 +16,24 @@ public class AuthService(
     IHashService hashService,
     IMapper mapper,
     ITokenService tokenService,
-    IUserRepository userRepository) : IAuthService
+    IUserRepository userRepository,
+    IValidator<LoginRequest> loginValidator,
+    IValidator<RegisterCustomerRequest> registerCustomerValidator,
+    IValidator<RegisterSupplierRequest> registerSupplierValidator) : IAuthService
 {
     private readonly IAuthRepository _authRepository = authRepository;
     private readonly IHashService _hashService = hashService;
     private readonly IMapper _mapper = mapper;
     private readonly ITokenService _tokenService = tokenService;
     private readonly IUserRepository _userRepository = userRepository;
+    private readonly IValidator<LoginRequest> _loginValidator = loginValidator;
+    private readonly IValidator<RegisterCustomerRequest> _registerCustomerValidator = registerCustomerValidator;
+    private readonly IValidator<RegisterSupplierRequest> _registerSupplierValidator = registerSupplierValidator;
 
     public async Task<Result<AuthenticatedResponse>> RegisterSupplier(RegisterSupplierRequest payload)
     {
-        if(!payload.Validate())
+        var validation = _registerSupplierValidator.Validate(payload);
+        if(!validation.IsValid)
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
 
         if (await _userRepository.GetSupplierByEmail(payload.Email) is not null)
@@ -35,8 +43,16 @@ public class AuthService(
         if (string.IsNullOrEmpty(hashedPassword))
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
 
-        var user = _mapper.Map<User>(payload);
-        user.Password = hashedPassword;
+        var user = new User(
+            firstname: payload.Firstname,
+            lastname: payload.Lastname,
+            email: payload.Email,
+            password: hashedPassword,
+            phone: payload.Phone,
+            companyName: payload.CompanyName,
+            websiteName: payload.WebsiteName,
+            websiteUrl: payload.WebsiteUrl);
+
         await _userRepository.Create(user);
 
         var token = new TokenDTO(
@@ -51,7 +67,8 @@ public class AuthService(
 
     public async Task<Result<AuthenticatedResponse>> LoginSupplier(LoginRequest payload)
     {
-        if (!payload.Validate())
+        var validation = _loginValidator.Validate(payload);
+        if (!validation.IsValid)
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
 
         var user = await _userRepository.GetSupplierByEmail(payload.Email);
@@ -73,7 +90,8 @@ public class AuthService(
 
     public async Task<Result<AuthenticatedResponse>> RegisterCustomer(RegisterCustomerRequest payload)
     {
-        if (!payload.Validate())
+        var validation = _registerCustomerValidator.Validate(payload);
+        if (!validation.IsValid)
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
 
         if (await _userRepository.GetCustomerByEmail(payload.Email) is not null)
@@ -99,7 +117,8 @@ public class AuthService(
 
     public async Task<Result<AuthenticatedResponse>> LoginCustomer(LoginRequest payload)
     {
-        if (!payload.Validate())
+        var validation = _loginValidator.Validate(payload);
+        if (!validation.IsValid)
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
 
         var user = await _userRepository.GetCustomerByEmail(payload.Email);

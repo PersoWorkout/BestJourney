@@ -1,4 +1,5 @@
 ﻿using Application.Auth;
+using Application.Auth.Validators;
 using Application.UnitTest.Fakers.Auth;
 using Application.UnitTest.Fakers.Users;
 using AutoMapper;
@@ -32,7 +33,10 @@ namespace Application.UnitTest.Services
                 _hashService,
                 _mapper,
                 _tokenService,
-                _userRepository);
+                _userRepository,
+                new LoginRequestValidator(),
+                new RegisterCustomerRequestValidator(),
+                new RegisterSupplierRequestValidator());
         }
 
         private const string DEFAULT_FIRSTNAME = "John";
@@ -297,13 +301,22 @@ namespace Application.UnitTest.Services
                 Lastname = lastname,
                 Email = email,
                 Password = password,
-                PasswordConfirmation = password
+                PasswordConfirmation = password,
+                Phone = "0606060606"
             };
         }
 
         private static RegisterCustomerRequest CreateInvalidCreationPayload()
         {
-            return new RegisterCustomerRequest();
+            return new RegisterCustomerRequest
+            {
+                Firstname = "",
+                Lastname = "",
+                Email = "",
+                Password = "",
+                PasswordConfirmation= "",
+                Phone = ""
+            };
         }
 
         private static LoginRequest CreateValidLoginPayload(

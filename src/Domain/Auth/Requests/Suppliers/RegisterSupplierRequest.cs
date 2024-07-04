@@ -13,22 +13,4 @@ public class RegisterSupplierRequest
     public required string CompanyName { get; set; }
     public required string WebsiteName { get; set; }
     public required string WebsiteUrl { get; set; }
-
-    public bool Validate()
-    {
-        return Firstname.IsValid() &&
-            Lastname.IsValid() &&
-            Email.IsValidEmail() &&
-            ValidPasswords() &&
-            CompanyName.IsValid() &&
-            WebsiteName.IsValid() &&
-            WebsiteUrl.IsValid();
-
-    }
-
-    private bool ValidPasswords()
-    {
-        return Password.IsValidPassword() &&
-            Password == PasswordConfirmation;
-    }
 }

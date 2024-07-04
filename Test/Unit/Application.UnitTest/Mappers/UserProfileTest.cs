@@ -51,6 +51,7 @@ namespace Application.UnitTest.Mappers
                 Email = "john.doe@example.com",
                 Password = "Password123!",
                 PasswordConfirmation = "Password123!",
+                Phone = "0606060606"
             };
 
             //Act

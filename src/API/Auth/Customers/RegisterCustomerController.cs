@@ -7,7 +7,7 @@ namespace API.Auth.Customers;
 
 [ApiController]
 [Route("auth/customers/register")]
-public class RegisterController(IAuthService service) : Controller
+public class RegisterCustomerController(IAuthService service) : Controller
 {
     private readonly IAuthService _authService = service;
 
