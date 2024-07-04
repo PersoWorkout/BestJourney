@@ -1,5 +1,6 @@
 ﻿using API.Attributes;
 using Application.Users;
+using Application.Users.Customers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Users
@@ -7,15 +8,14 @@ namespace API.Users
     [ApiController]
     [Route("/users")]
     public class UserController(
-        IUserService userService) : Controller
+        ICustomerService userService) : Controller
     {
-        private readonly IUserService _userService = userService;
+        private readonly ICustomerService _userService = userService;
 
-        [Authenticated]
         [HttpGet]
         public async Task<IResult> Get()
         {
-            var result = await _userService.GetUsers();
+            var result = await _userService.GetAll();
             return result.IsSucess ?
                 Results.Ok(result.Data) :
                 Results.Problem(

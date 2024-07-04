@@ -18,7 +18,7 @@ public class GetOrdersByUserController(
     [HttpGet]
     public async Task<IResult> Handle()
     {
-        var result = await _service.GetByUser(
+        var result = await _service.GetByCustomer(
                 HttpContext.Items["userId"]!.ToString()!);
 
         return result.IsSucess ?

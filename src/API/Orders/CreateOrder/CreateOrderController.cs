@@ -20,8 +20,8 @@ public class CreateOrderController(
     public async Task<IResult> Handle([FromBody] CreateOrderRequest payload)
     {
         var result = await _service.Create(
-            payload,
-            HttpContext.Items["userId"]!.ToString()!);
+            HttpContext.Items["userId"]!.ToString()!,
+            payload);
 
         return result.IsSucess ?
             Results.Ok(_presenter.ToJson(result.Data!)) :

@@ -28,7 +28,8 @@ public static class ModelBuilderExtensions
                 firstname: "Yasin",
                 lastname: "Karakus",
                 email: "yasin.karakus@example.com",
-                password: BCrypt.Net.BCrypt.HashPassword("Password123!"))
+                password: BCrypt.Net.BCrypt.HashPassword("Password123!"),
+                phone: "0606060606")
         );
     }
 }
