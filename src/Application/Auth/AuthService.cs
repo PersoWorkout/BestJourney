@@ -47,6 +47,28 @@ public class AuthService(
             new AuthenticatedResponse(token));
     }
 
+    public async Task<Result<AuthenticatedResponse>> LoginSupplier(LoginUserRequest payload)
+    {
+        if (!payload.Validate())
+            return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
+
+        var user = await _userRepository.GetSupplierByEmail(payload.Email);
+        if (user is null)
+            return Result<AuthenticatedResponse>.Failure(UserError.InvalidCredentials);
+
+        if (!_hashService.Verify(payload.Password, user.Password))
+            return Result<AuthenticatedResponse>.Failure(UserError.InvalidCredentials);
+
+        var token = new TokenDTO(
+            _tokenService.Generate(),
+            user.Id.ToString());
+
+        await _authRepository.Set(token);
+
+        return Result<AuthenticatedResponse>.Success(
+            new AuthenticatedResponse(token));
+    }
+
     public async Task<Result<AuthenticatedResponse>> RegisterCustomer(CreateUserRequest payload)
     {
         if (!payload.Validate())
@@ -79,28 +101,6 @@ public class AuthService(
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
 
         var user = await _userRepository.GetCustomerByEmail(payload.Email);
-        if (user is null)
-            return Result<AuthenticatedResponse>.Failure(UserError.InvalidCredentials);
-
-        if (!_hashService.Verify(payload.Password, user.Password))
-            return Result<AuthenticatedResponse>.Failure(UserError.InvalidCredentials);
-
-        var token = new TokenDTO(
-            _tokenService.Generate(),
-            user.Id.ToString());
-
-        await _authRepository.Set(token);
-
-        return Result<AuthenticatedResponse>.Success(
-            new AuthenticatedResponse(token));
-    }
-
-    public async Task<Result<AuthenticatedResponse>> LoginSupplier(LoginUserRequest payload)
-    {
-        if (!payload.Validate())
-            return Result<AuthenticatedResponse>.Failure(UserError.InvalidPayload);
-
-        var user = await _userRepository.GetSupplierByEmail(payload.Email);
         if (user is null)
             return Result<AuthenticatedResponse>.Failure(UserError.InvalidCredentials);
 
