@@ -20,13 +20,13 @@ public class OrderService(
     private readonly IJourneyRepository _journeyReposirtory = journeyReposirtory;
     private readonly IMapper _mapper = mapper;
 
-    public async Task<Result<IEnumerable<Order>>> GetByUser(string userId)
+    public async Task<Result<IEnumerable<Order>>> GetByCustomer(string customerId)
     {
-        if (!Guid.TryParse(userId, out var parsedUserId))
+        if (!Guid.TryParse(customerId, out var parsedUserId))
             return Result<IEnumerable<Order>>
                 .Failure(UserError.NotFound);
 
-        var user = await _userRepository.GetById(parsedUserId);
+        var user = await _userRepository.GetCustomerById(parsedUserId);
         if (user is null)
             return Result<IEnumerable<Order>>
                 .Failure(UserError.NotFound);
@@ -35,13 +35,13 @@ public class OrderService(
 
         return Result<IEnumerable<Order>>.Success(orders);
     }
-    public async Task<Result<Order>> Create(CreateOrderRequest payload, string userId)
+    public async Task<Result<Order>> Create(string customerId, CreateOrderRequest payload)
     {
-        if (!Guid.TryParse(userId, out var parsedUserId))
+        if (!Guid.TryParse(customerId, out var parsedUserId))
             return Result<Order>
                 .Failure(UserError.NotFound);
 
-        var user = await _userRepository.GetById(parsedUserId);
+        var user = await _userRepository.GetCustomerById(parsedUserId);
         if (user is null)
             return Result<Order>
                 .Failure(UserError.NotFound);
@@ -68,9 +68,9 @@ public class OrderService(
         return Result<Order>.Success(result);
     }
 
-    public async Task<Result<object>> Delete(string orderId, string userId)
+    public async Task<Result<object>> Delete(string orderId, string customerId)
     {
-        if (!Guid.TryParse(userId, out var parsedUserId))
+        if (!Guid.TryParse(customerId, out var parsedUserId))
             return Result<object>.Failure(OrderError.NotFound(orderId));
 
         if (!Guid.TryParse(orderId, out var parsedOrderId))
@@ -115,9 +115,9 @@ public class OrderService(
         return Result<IEnumerable<Order>>.Success(orders);
     }
 
-    public async Task<Result<Order>> Update(string orderId, string userId, UpdateOrderRequest payload)
+    public async Task<Result<Order>> Update(string orderId, string customerId, UpdateOrderRequest payload)
     {
-        if (!Guid.TryParse(userId, out var parsedUserId))
+        if (!Guid.TryParse(customerId, out var parsedUserId))
             return Result<Order>.Failure(OrderError.NotFound(orderId));
 
         if (!Guid.TryParse(orderId, out var parsedOrderId))
