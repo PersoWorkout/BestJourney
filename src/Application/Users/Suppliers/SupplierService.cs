@@ -1,12 +1,16 @@
 ﻿using Domain.Abstractions;
 using Domain.Users;
 using Domain.Users.Requests;
+using FluentValidation;
 
 namespace Application.Users.Suppliers;
 
-public class SupplierService(IUserRepository repository) : ISupplierService
+public class SupplierService(
+    IUserRepository repository,
+    IValidator<UpdateSupplierRequest> validator) : ISupplierService
 {
     private readonly IUserRepository _repository = repository;
+    private readonly IValidator<UpdateSupplierRequest> _validator = validator;
 
     public async Task<Result<object>> Delete(string id)
     {
@@ -46,6 +50,11 @@ public class SupplierService(IUserRepository repository) : ISupplierService
 
     public async Task<Result<User>> Update(string id, UpdateSupplierRequest payload)
     {
+        var validation = _validator.Validate(payload);
+        if (!validation.IsValid)
+            return Result<User>.Failure(
+                UserError.InvalidPayload);
+
         if (!Guid.TryParse(id, out var userId))
             return Result<User>.Failure(
                 UserError.NotFound);

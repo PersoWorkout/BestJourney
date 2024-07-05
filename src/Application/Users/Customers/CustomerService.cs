@@ -1,12 +1,16 @@
 ﻿using Domain.Abstractions;
 using Domain.Users;
 using Domain.Users.Requests;
+using FluentValidation;
 
 namespace Application.Users.Customers;
 
-public class CustomerService(IUserRepository repository) : ICustomerService
+public class CustomerService(
+    IUserRepository repository,
+    IValidator<UpdateCustomerRequest> validator) : ICustomerService
 {
     private readonly IUserRepository _repository = repository;
+    private readonly IValidator<UpdateCustomerRequest> _validator = validator;
 
     public async Task<Result<IEnumerable<User>>> GetAll()
     {
@@ -28,9 +32,10 @@ public class CustomerService(IUserRepository repository) : ICustomerService
         return Result<User>.Success(user);
     }
 
-    public async Task<Result<User>> Update(string id, UpdateUserRequest paylaod)
+    public async Task<Result<User>> Update(string id, UpdateCustomerRequest paylaod)
     {
-        if (!paylaod.Validate())
+        var validation = _validator.Validate(paylaod);
+        if (!validation.IsValid)
             return Result<User>.Failure(
                 UserError.InvalidPayload);
 

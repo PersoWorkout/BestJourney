@@ -15,7 +15,7 @@ namespace Application.UnitTest.Services
         {
             _userRepository = new FakeUserRepository();
 
-            _userService = new CustomerService(_userRepository);
+            _userService = new CustomerService(_userRepository, new UpdateCustomerRequestValidator());
         }
 
         private const string DEFAULT_FIRSTNAME = "John";
@@ -202,12 +202,12 @@ namespace Application.UnitTest.Services
             Assert.Equal(UserError.EmailAlreadyUsed, result.Error);
         }
 
-        private static UpdateUserRequest CreatePayloadToUpdate(
+        private static UpdateCustomerRequest CreatePayloadToUpdate(
             string firstname = "",
             string lastname = "",
             string email = "")
         {
-            return new UpdateUserRequest
+            return new UpdateCustomerRequest
             {
                 Firstname = firstname,
                 Lastname = lastname,

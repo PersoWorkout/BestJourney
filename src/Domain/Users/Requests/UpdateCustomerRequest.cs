@@ -2,7 +2,7 @@
 
 namespace Domain.Users.Requests;
 
-public class UpdateUserRequest
+public class UpdateCustomerRequest
 {
     public string Firstname { get; set; }
     public string Lastname { get; set; }
