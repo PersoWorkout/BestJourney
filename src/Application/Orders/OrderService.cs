@@ -6,6 +6,7 @@ using Domain.Journeys;
 using Domain.Orders;
 using Domain.Orders.Requests;
 using Domain.Users;
+using FluentValidation;
 
 namespace Application.Orders;
 
@@ -13,11 +14,13 @@ public class OrderService(
     IOrderRepository repository,
     IUserRepository userRepository,
     IJourneyRepository journeyReposirtory,
+    IValidator<CreateOrderRequest> validator,
     IMapper mapper) : IOrderService
 {
     private readonly IOrderRepository _repository = repository;
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IJourneyRepository _journeyReposirtory = journeyReposirtory;
+    private readonly IValidator<CreateOrderRequest> _validator = validator;
     private readonly IMapper _mapper = mapper;
 
     public async Task<Result<IEnumerable<Order>>> GetByCustomer(string customerId)
@@ -37,6 +40,11 @@ public class OrderService(
     }
     public async Task<Result<Order>> Create(string customerId, CreateOrderRequest payload)
     {
+        var validation = _validator.Validate(payload);
+        if(!validation.IsValid)
+            return Result<Order>
+                .Failure(OrderError.InvalidPayload);
+
         if (!Guid.TryParse(customerId, out var parsedUserId))
             return Result<Order>
                 .Failure(UserError.NotFound);
