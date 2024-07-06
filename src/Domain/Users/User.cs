@@ -1,6 +1,7 @@
 ﻿using Domain.Journeys;
 using Domain.Orders;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Text.Json.Serialization;
 
 namespace Domain.Users;
@@ -107,4 +108,13 @@ public class User
             WebsiteUrl = websiteUrl;
         UpdatedAt = DateTime.Now;
     }
+
+    public ClaimsPrincipal GetClaims(string token) => 
+        new(new ClaimsIdentity(
+            [
+                new(ClaimTypes.Name, $"{Firstname} {Lastname}"),
+                new(ClaimTypes.Email, Email),
+                new(ClaimTypes.Role, Role.ToString()),
+                new(ClaimTypes.UserData, token)
+            ]));
 }
