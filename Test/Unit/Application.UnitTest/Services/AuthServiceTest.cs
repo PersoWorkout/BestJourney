@@ -257,7 +257,7 @@ namespace Application.UnitTest.Services
             var result = await _authService.IsAuthenticated(token);
 
             //Assert
-            Assert.Equal(user.Id, result);
+            Assert.Equal(user.Id, result?.Id);
             
         }
 

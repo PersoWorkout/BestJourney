@@ -109,12 +109,15 @@ public class User
         UpdatedAt = DateTime.Now;
     }
 
-    public ClaimsPrincipal GetClaims(string token) => 
-        new(new ClaimsIdentity(
-            [
+    public ClaimsPrincipal GetClaims(string token) =>
+        new(
+            new ClaimsIdentity(new Claim[]
+            {
                 new(ClaimTypes.Name, $"{Firstname} {Lastname}"),
                 new(ClaimTypes.Email, Email),
                 new(ClaimTypes.Role, Role.ToString()),
                 new(ClaimTypes.UserData, token)
-            ]));
+            }));
+           
+               
 }
