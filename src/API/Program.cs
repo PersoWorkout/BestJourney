@@ -1,5 +1,4 @@
 using API.DependencyInjection;
-using API.Orders.CreateOrder;
 using Application.DependencyInjection;
 using Infrastructure.Data;
 using Infrastructure.DependencyInjection;
@@ -27,7 +26,8 @@ if (app.Environment.IsDevelopment())
 
 using(var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<BestJourneyDbContext>();
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<BestJourneyDbContext>();
     dbContext.Database.Migrate();
 }
 

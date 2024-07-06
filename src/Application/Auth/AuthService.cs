@@ -171,13 +171,15 @@ public class AuthService(
             _mapper.Map<UserResponse>(user));
     }
 
-    public async Task<Guid?> IsAuthenticated(string token)
+    public async Task<User?> IsAuthenticated(string token)
     {
         if (string.IsNullOrEmpty(token)) return null;
 
         var userId = await _authRepository.Get(token);
         if (string.IsNullOrEmpty(userId)) return null;
 
-        return Guid.Parse(userId);
+        var user = await _userRepository.GetCustomerById(Guid.Parse(userId));
+
+        return user;
     }
 }

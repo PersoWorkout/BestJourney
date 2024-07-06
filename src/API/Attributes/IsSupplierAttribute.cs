@@ -21,8 +21,8 @@ public class IsSupplierAttribute : Attribute, IAsyncAuthorizationFilter
             .RequestServices
             .GetRequiredService<IAuthService>();
 
-        var userId = await authService.IsAuthenticated(token);
-        if (!userId.HasValue)
+        var user = await authService.IsAuthenticated(token);
+        if (user is null)
         {
             context.Result = new UnauthorizedResult();
             return;
@@ -32,7 +32,7 @@ public class IsSupplierAttribute : Attribute, IAsyncAuthorizationFilter
             .RequestServices
             .GetRequiredService<IUserRepository>();
 
-        var role = await userRepository.GetRole(userId.Value);
+        var role = await userRepository.GetRole(user.Id);
 
         if(role != UserRole.Supplier)
         {
@@ -40,6 +40,6 @@ public class IsSupplierAttribute : Attribute, IAsyncAuthorizationFilter
             return;
         }
 
-        context.HttpContext.Items["userId"] = userId.ToString();
+        context.HttpContext.Items["userId"] = user.Id.ToString();
     }
 }

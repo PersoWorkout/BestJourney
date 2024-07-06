@@ -17,5 +17,5 @@ public interface IAuthService
     Task<Result<UserResponse>> ResetPassword(
         string userId,
         ResetPasswordRequest payload);
-    Task<Guid?> IsAuthenticated(string token);
+    Task<User?> IsAuthenticated(string token);
 }

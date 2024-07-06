@@ -15,17 +15,17 @@ public class AuthenticatedAttribute : Attribute, IAsyncAuthorizationFilter
              .Authorization
              .ToString();
 
-        var userId = await context.HttpContext
+        var user = await context.HttpContext
             .RequestServices
             .GetRequiredService<IAuthService>()
             .IsAuthenticated(token);
 
-        if (userId is null)
+        if (user is null)
         {
             context.Result = new UnauthorizedResult();
             return;
         }
 
-        context.HttpContext.Items["userId"] = userId.ToString();
+        context.HttpContext.Items["userId"] = user.Id.ToString();
     }
 }
