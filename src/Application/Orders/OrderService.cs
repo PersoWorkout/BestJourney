@@ -144,4 +144,48 @@ public class OrderService(
 
         return Result<Order>.Success(result);
     }
+
+    public async Task<Result<Order>> BeginPayment(string orderId, string userId)
+    {
+        if (!Guid.TryParse(userId, out var parsedUserId))
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        if (!Guid.TryParse(orderId, out var parsedOrderId))
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        var order = await _repository.GetById(parsedOrderId);
+        if (order is null)
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        if (order.UserId != parsedUserId)
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        order.BeginPayment();
+
+        var result = await _repository.Update(order);
+
+        return Result<Order>.Success(result);
+    }
+
+    public async Task<Result<Order>> CompletePayment(string orderId, string userId)
+    {
+        if(!Guid.TryParse(userId, out var parsedUserId))
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        if (!Guid.TryParse(orderId, out var parsedOrderId))
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        var order = await _repository.GetById(parsedOrderId);
+        if (order is null)
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        if (order.UserId != parsedUserId)
+            return Result<Order>.Failure(OrderError.NotFound(orderId));
+
+        order.CompletePayment();
+
+        var result = await _repository.Update(order);
+
+        return Result<Order>.Success(result);
+    }
 }

@@ -2,6 +2,8 @@
 using API.Journeys.GetJourneyById;
 using API.Journeys.GetJourneys;
 using API.Journeys.UpdateJourney;
+using API.Orders.BeginOrderPayment;
+using API.Orders.CompleteOrderPayment;
 using API.Orders.CreateOrder;
 using API.Orders.GetOrderById;
 using API.Orders.GetOrderByUser;
@@ -17,7 +19,9 @@ public static class ApiServiceInstaller
             .AddScoped<CreateOrderPresenter>()
             .AddScoped<GetOrdersByUserPresenter>()
             .AddScoped<GetOrderByIdPresenter>()
-            .AddScoped<UpdateOrderPresenter>();
+            .AddScoped<UpdateOrderPresenter>()
+            .AddScoped<BeginOrderPaymentPresenter>()
+            .AddScoped<CompleteOrderPaymentPresenter>();
 
         services.
             AddScoped<CreateJourneyPresenter>()

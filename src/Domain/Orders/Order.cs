@@ -29,4 +29,31 @@ public class Order
         if (status.HasValue) Status = status.Value;
         UpdatedAt = DateTime.Now;
     }
+
+    public void BeginPayment()
+    {
+        Status = PaymentStatus.Pending;
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void CompletePayment()
+    {
+        Status = PaymentStatus.Paied;
+        UpdatedAt = DateTime.Now;
+    }
+
+    public bool IsPaied()
+    {
+        return Status == PaymentStatus.Paied;
+    }
+
+    public bool IsPending()
+    {
+        return Status == PaymentStatus.Pending;
+    }
+
+    public bool IsUNpaied()
+    {
+        return Status == PaymentStatus.Unpaied;
+    }
 }

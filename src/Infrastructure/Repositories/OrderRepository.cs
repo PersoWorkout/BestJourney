@@ -27,8 +27,9 @@ public class OrderRepository(BestJourneyDbContext dbContext) : IOrderRepository
     {
         return await _dbContext.Orders
             .Where(o => o.Id == id)
-            .Include(o => o.Journey)
             .Include(o => o.User)
+            .Include(o => o.Journey)
+            .Include(o => o.Journey.Creator)
             .FirstOrDefaultAsync();
     }
 
@@ -36,8 +37,8 @@ public class OrderRepository(BestJourneyDbContext dbContext) : IOrderRepository
     {
         return await _dbContext.Orders
             .Where(o => o.JourneyId == id)
-            .Include(o => o.Journey)
             .Include(o => o.User)
+            .Include(o => o.Journey)
             .ToListAsync();
     }
 

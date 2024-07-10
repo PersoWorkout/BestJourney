@@ -10,5 +10,7 @@ public interface IOrderService
     Task<Result<Order>> GetById(string orderId);
     Task<Result<Order>> Create(string customerId, CreateOrderRequest payload);
     Task<Result<Order>> Update(string orderId, string customerId, UpdateOrderRequest payload);
+    Task<Result<Order>> BeginPayment(string orderId, string userId);
+    Task<Result<Order>> CompletePayment(string orderId, string userId);
     Task<Result<object>> Delete(string orderId, string customerId);
 }
